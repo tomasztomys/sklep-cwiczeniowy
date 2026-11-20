@@ -1,0 +1,19 @@
+# Tekst książki: tylko lokalnie dla Claude Code, repozytorium jest publiczne
+/ksiazka/*
+!/ksiazka/README.md
+
+# Node.js
+node_modules/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/
+
+# Lokalne ustawienia i sekrety
+.env
+.claude/settings.local.json
+.idea/
+.DS_Store

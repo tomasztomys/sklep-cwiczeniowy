@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run check)",
+      "Bash(npm test)",
+      "Bash(npm ci)",
+      "Bash(npx playwright test:*)",
+      "Bash(docker compose:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(gh:*)",
+      "Bash(docker push:*)",
+      "Bash(docker buildx build:*)",
+      "Edit(.github/workflows/**)",
+      "Write(.github/workflows/**)"
+    ]
+  }
+}
