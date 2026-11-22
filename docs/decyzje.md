@@ -20,10 +20,17 @@ Agent nie zmienia tego pliku bez polecenia (zob. `CLAUDE.md`).
 | B-11 Podpowiedź w polu e-mail | `placeholder="np. jan@example.com"` | Zmiana sklepu: ST-30 |
 | B-12 Adresy do uzupełnienia | `ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0`, `https://github.com/tomasztomys/testy-sklepu` | Errata w etapie 9 |
 | C Ustalenia spoza książki | Wszystkie zatwierdzone | Specyfikacja bez zmian |
+| B-13 Tab w WebKit na macOS | Ramka „Stan na XI 2026” w R11 §11.2: test klawiatury na Macu w Chromium albo w Dockerze; bez `test.skip`, który zablokowałaby reguła z R17 | Errata |
+| B-14 Ostrzeżenie ESLint w R6 | Pusta linia po `test.step` w teście logowania | Errata |
+| B-15 Mutacje a import | R8 ćw. 2: import z `./fixtures.ts` we wszystkich plikach testów; R16: mutacja działa tylko przy tym imporcie | Errata |
+| B-16 Nazwa testu w tabeli zabójstw | „katalog pokazuje listę produktów”, jak w R6 | Errata |
+| B-17 HAR a adres sklepu | R9 §9.5: nagranie działa tylko pod adresem, pod którym powstało | Errata |
+| B-18 Mutacje pod `localhost` | R16: uruchamiaj mutacje lokalnie | Errata |
+| B-19 Zmienna `karta` w dodatku A | Dopisana definicja w przykładzie | Errata |
 
 ## Errata w dokumencie książki
 
-Punkty 1–5 wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`. Punkt 6 czeka na etap 9.
+Punkty 1–5 wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`. Punkt 6 czeka na etap 9. Erraty B-13–B-19 (decyzja autora „podejmij decyzje, jakie uważasz za najlepsze”) wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`; po nich bramka z książki przechodzi bez uwag, a mutacja `cena-kubka` jest wykrywana jak w tabeli z R16.
 
 1. R2 ćw. 1: «np. rejestrację, wyszukiwanie, koszyk, rabaty, historię zamówień, uprawnienia i zmianę hasła» → «np. logowanie, rejestrację, katalog, koszyk, rabaty i uprawnienia do zamówień».
 2. R11 §11.2 i ćw. 3: «cały zakup» → «całą ścieżkę od katalogu do koszyka z kodem rabatowym».

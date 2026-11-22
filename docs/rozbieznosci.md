@@ -143,19 +143,21 @@ Testy z książki (`wzorzec/tests`, Chromium, bez testów wizualnych) uruchomion
 
 ## E. Kod z książki jako testy akceptacyjne (etap 6)
 
+Status: B-13–B-19 rozstrzygnięte erratami 2026-11-22 (`docs/decyzje.md`).
+
 `akceptacja/` składa skrypt `narzedzia/zloz-akceptacje.py` z bloków kodu w `ksiazka/`. Każdy z 140 bloków jest użyty albo pominięty z powodem: przykłady celowo złe, szkice z „// ...”, fragmenty poglądowe, polecenia terminala. Całość sprawdza `narzedzia/akceptacja.sh`. Skrypt buduje obraz sklepu i uruchamia testy z książki w obrazie `mcr.microsoft.com/playwright:v1.65.1-noble`.
 
 ### Wyniki
 
 | Sprawdzenie | Wynik |
 | --- | --- |
-| `npm run check` z książki (tsc, ESLint z rozdziałów 4, 7, 8 i 17) | przechodzi, z jednym ostrzeżeniem (B-14) |
+| `npm run check` z książki (tsc, ESLint z rozdziałów 4, 7, 8 i 17) | przechodzi bez uwag (po erracie B-14) |
 | Testy z książki na obrazie sklepu (Chromium) | 50 przechodzi; nie przechodzą tylko trzy skany axe, które według rozdziału 11.2 mają się wyłożyć |
 | Test „newsletter” z `test.fail()` | przechodzi jako oczekiwany błąd |
 | Testy na wspólnym koncie (rozdziały 6–7) | przechodzą po kolei (`--workers=1`), równolegle psują sobie wyniki, dokładnie jak ostrzega rozdział 7.3 |
 | Nagranie HAR (rozdział 9.5) | działa po nagraniu z `NAGRAJ_HAR=1` pod tym samym adresem sklepu (zob. B-17) |
 | Wzorce wizualne (rozdział 11.1) | wygenerowane poleceniem z książki w obrazie Dockera, trzy przebiegi bez różnic; `zmiana-stylu` wykrywają oba testy |
-| Mutacje z rozdziału 16 | `bez-komunikatu`, `blad-koszyka`, `pusty-katalog` wykrywają testy koszyka i katalogu jak w tabeli; test z generatora (15.3) przetrwał wszystkie cztery, jak w książce; `cena-kubka` zob. B-15 |
+| Mutacje z rozdziału 16 | `bez-komunikatu`, `blad-koszyka`, `pusty-katalog` wykrywają testy koszyka i katalogu jak w tabeli; test z generatora (15.3) przetrwał wszystkie cztery, jak w książce; `cena-kubka` wykrywa test ceny kubka (po erracie B-15) |
 | Test niestabilny (rozdział 10.2) z `wolne-api` | nie przeszedł w 9 z 10 powtórzeń (książka: 6 z 10, „u ciebie liczby będą inne”); test z asercją web-first 10 z 10 |
 | Ćwiczenia z rozdziałów 4 i 5 uruchomione na sklepie | wynik zgodny z komentarzami w książce |
 | Test obciążeniowy k6 (rozdział 11.3) | p95 = 6 ms (próg 500 ms), 0% błędów |

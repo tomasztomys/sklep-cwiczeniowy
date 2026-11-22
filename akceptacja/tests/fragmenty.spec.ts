@@ -82,7 +82,6 @@ test('R10 §10.3 czekanie na odpowiedź serwera', async ({ klient, page }) => {
 // dodatek-a:167
 test('DA A.6 czekanie na odpowiedź', async ({ klient, page }) => {
   await page.goto('/');
-  // UZUPEŁNIENIE (etap 6): zmienna karta z przykładu
   const karta = page.getByRole('listitem').filter({ hasText: 'Kubek' });
   const odpowiedz = page.waitForResponse(
     (o) => o.url().includes('/api/cart/items') && o.request().method() === 'POST',
@@ -91,7 +90,7 @@ test('DA A.6 czekanie na odpowiedź', async ({ klient, page }) => {
   expect((await odpowiedz).ok()).toBe(true);
 });
 
-// dodatek-a:177
+// dodatek-a:178
 test('DA A.7 podmiana odpowiedzi', async ({ page }) => {
   // pusta lista produktów
   await page.route('**/api/products', (route) => route.fulfill({ json: [] }));
@@ -117,7 +116,7 @@ test('DA A.7 podmiana odpowiedzi', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Produkty' })).toBeVisible();
 });
 
-// dodatek-a:204
+// dodatek-a:205
 test('DA A.7 testy API', async ({ request, apiKlienta }) => {
   const odp = await request.get('/api/products');
   await expect(odp).toBeOK();

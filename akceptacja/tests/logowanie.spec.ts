@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+// UZUPEŁNIENIE (etap 6): import po ćwiczeniu 2 z rozdziału 8
+import { test, expect } from './fixtures.ts';
 
 test.describe('logowanie', () => {
   test.beforeEach(async ({ page }) => {
@@ -11,6 +12,7 @@ test.describe('logowanie', () => {
       await page.getByLabel('Hasło').fill('Klient123!');
       await page.getByRole('button', { name: 'Zaloguj się' }).click();
     });
+
     await expect(page.getByRole('button', { name: 'Wyloguj się' })).toBeVisible();
   });
 
