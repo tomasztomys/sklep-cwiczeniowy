@@ -26,7 +26,7 @@ U = '// UZUPEŁNIENIE (etap 6): '
 MANIFEST = [
     # --- rozdział 3–5: projekt, ćwiczenia z TypeScriptu i HTTP ---
     ('plik', r(3, 157), 'compose.yaml'),
-    ('zamien', None, 'compose.yaml', 'image: ghcr.io/AUTOR/sklep-cwiczeniowy:1.0', 'image: ${OBRAZ_SKLEPU:-ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0}'),
+    ('zamien', None, 'compose.yaml', 'image: ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0', 'image: ${OBRAZ_SKLEPU:-ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0}'),
     ('plik', r(4, 39), 'tsconfig.json'),
     ('plik', r(4, 60), 'cwiczenia/rozdzial-04/pierwszy.ts'),
     ('plik', r(4, 80), 'cwiczenia/rozdzial-04/zmienne.ts'),

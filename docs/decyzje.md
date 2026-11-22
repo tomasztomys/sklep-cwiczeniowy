@@ -31,7 +31,7 @@ Agent nie zmienia tego pliku bez polecenia (zob. `CLAUDE.md`).
 
 ## Errata w dokumencie książki
 
-Punkty 1–5 wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`. Punkt 6 czeka na etap 9. Erraty B-13–B-19 (decyzja autora „podejmij decyzje, jakie uważasz za najlepsze”) wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`; po nich bramka z książki przechodzi bez uwag, a mutacja `cena-kubka` jest wykrywana jak w tabeli z R16.
+Punkty 1–5 wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`. Punkt 6 (adresy) wprowadzony 2026-11-22 po publikacji obrazu `v1.0`. Erraty B-13–B-19 (decyzja autora „podejmij decyzje, jakie uważasz za najlepsze”) wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`; po nich bramka z książki przechodzi bez uwag, a mutacja `cena-kubka` jest wykrywana jak w tabeli z R16.
 
 1. R2 ćw. 1: «np. rejestrację, wyszukiwanie, koszyk, rabaty, historię zamówień, uprawnienia i zmianę hasła» → «np. logowanie, rejestrację, katalog, koszyk, rabaty i uprawnienia do zamówień».
 2. R11 §11.2 i ćw. 3: «cały zakup» → «całą ścieżkę od katalogu do koszyka z kodem rabatowym».

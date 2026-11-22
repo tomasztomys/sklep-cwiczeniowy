@@ -13,7 +13,7 @@ jobs:
       options: --user 1001
     services:
       sklep:
-        image: ghcr.io/AUTOR/sklep-cwiczeniowy:1.0
+        image: ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0
         env:
           SKLEP_DANE_STARTOWE: 'tak'
     env:

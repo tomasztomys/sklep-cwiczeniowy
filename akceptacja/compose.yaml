@@ -1,6 +1,5 @@
 services:
   sklep:
-    # DO UZUPEŁNIENIA: docelowy adres obrazu sklepu
     image: ${OBRAZ_SKLEPU:-ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0}
     ports:
       - "3000:3000"
