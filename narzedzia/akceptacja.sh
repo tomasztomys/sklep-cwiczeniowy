@@ -6,7 +6,12 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 OBRAZ="${1:-sklep-cwiczeniowy:akceptacja}"
 [ $# -eq 0 ] && docker build -q -t "$OBRAZ" . >/dev/null
-python3 narzedzia/zloz-akceptacje.py | tail -1
+# Tekst książki jest tylko lokalnie (ksiazka/ w .gitignore). Bez niego, np. w CI, testujemy akceptacja/ z repozytorium.
+if [ -f ksiazka/rozdzial-01.md ]; then
+  python3 narzedzia/zloz-akceptacje.py | tail -1 || exit 1
+else
+  echo "Brak tekstu książki w ksiazka/ – używam akceptacja/ z repozytorium"
+fi
 
 # Testy w sieci kontenera sklepu: sklep jest pod http://localhost:3000, jak u czytelnika na komputerze.
 # Pod adresem z sieci prywatnej (np. host.docker.internal albo http://sklep:3000) Chromium 159 blokuje
@@ -14,7 +19,7 @@ python3 narzedzia/zloz-akceptacje.py | tail -1
 SIEC="--network container:sklep-akceptacja"; ADRES="http://localhost:3000"
 sklep() { docker rm -f sklep-akceptacja >/dev/null 2>&1; docker run -d --name sklep-akceptacja -e SKLEP_BLEDY="$1" "$OBRAZ" >/dev/null; }
 testy() { # $1 = MUTACJA, $2 = plik wyniku, $3 = filtr --grep
-  docker run --rm --ipc=host --init $SIEC -e BASE_URL="$ADRES" -e MUTACJA="$1" -e NPM_CONFIG_UPDATE_NOTIFIER=false \
+  docker run --rm --ipc=host --init $SIEC -e BASE_URL="$ADRES" -e MUTACJA="$1" -e ADMIN_EMAIL=admin@sklep.test -e ADMIN_HASLO=Admin123! -e NPM_CONFIG_UPDATE_NOTIFIER=false \
     -v "$(pwd)/akceptacja":/work -v akceptacja-node-modules:/work/node_modules -v "$(pwd)/narzedzia":/narzedzia -w /work \
     mcr.microsoft.com/playwright:v1.65.1-noble \
     sh -c "npm ci --silent && node scripts/czekaj-na-sklep.ts >/dev/null && npx playwright test --project=chromium --workers=1 --reporter=json $3 > /tmp/w.json 2>/dev/null; cp /tmp/w.json /narzedzia/.wyniki-$2.json"
