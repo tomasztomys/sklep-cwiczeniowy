@@ -5,6 +5,8 @@ const baseURL = process.env.BASE_URL ?? `http://localhost:${String(port)}`;
 
 export default defineConfig({
   testDir: './testy',
+  // Testy trybów błędów uruchamiają własne procesy sklepu z kodu, więc nie dotyczą kontenera.
+  testIgnore: process.env.BASE_URL ? ['**/tryby/**'] : [],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,

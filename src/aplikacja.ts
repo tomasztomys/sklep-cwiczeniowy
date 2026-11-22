@@ -20,7 +20,7 @@ export function utworzAplikacje(sklep: Sklep, konfiguracja: Konfiguracja): Hono 
     for (const [nazwa, wartosc] of Object.entries(NAGLOWKI_BEZPIECZENSTWA)) c.header(nazwa, wartosc);
   });
 
-  app.route('/api', utworzApi(sklep));
+  app.route('/api', utworzApi(sklep, konfiguracja));
   app.all('/api/*', (c) => c.json({ blad: 'Nie znaleziono' }, 404));
   // Obrazy, czcionki i style z katalogu publiczne/ (K-9). Ścieżka względem katalogu roboczego.
   app.use('*', serveStatic({ root: './publiczne' }));

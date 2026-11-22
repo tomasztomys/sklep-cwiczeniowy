@@ -2,6 +2,7 @@
 import { Hono, type Context } from 'hono';
 import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import { createMiddleware } from 'hono/factory';
+import type { Konfiguracja } from './konfiguracja.ts';
 import { MAKS_ILOSC, type Sklep } from './stan.ts';
 
 const CIASTECZKO = 'sesja';
@@ -25,12 +26,34 @@ async function cialo(c: Context): Promise<Record<string, unknown>> {
 const czyIlosc = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 1 && (v as number) <= MAKS_ILOSC;
 const niepustyTekst = (v: unknown): v is string => typeof v === 'string' && v.trim() !== '';
 
-export function utworzApi(sklep: Sklep): Hono<Zmienne> {
+// Losowa kolejność bez powtórzeń (Fisher–Yates) dla trybu losowa-kolejnosc.
+function przetasuj<T>(lista: readonly T[]): T[] {
+  const wynik = [...lista];
+  for (let i = wynik.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [wynik[i], wynik[j]] = [wynik[j] as T, wynik[i] as T];
+  }
+  return wynik;
+}
+
+export function utworzApi(sklep: Sklep, konfiguracja: Konfiguracja): Hono<Zmienne> {
   const api = new Hono<Zmienne>();
+  const { bledy } = konfiguracja;
+
+  // Tryb wolne-api: każda odpowiedź pod /api/ z losowym opóźnieniem 0–3 s (rozdział 7 specyfikacji).
+  if (bledy.has('wolne-api')) {
+    api.use(async (_c, next) => {
+      await new Promise((r) => setTimeout(r, Math.random() * 3000));
+      await next();
+    });
+  }
 
   api.get('/health', (c) => c.json({ status: 'ok' }));
 
-  api.get('/products', (c) => c.json(sklep.produkty.map((p) => ({ id: p.id, nazwa: p.nazwa, cena: p.cenaGr / 100 }))));
+  api.get('/products', (c) => {
+    const produkty = bledy.has('losowa-kolejnosc') ? przetasuj(sklep.produkty) : sklep.produkty;
+    return c.json(produkty.map((p) => ({ id: p.id, nazwa: p.nazwa, cena: p.cenaGr / 100 })));
+  });
 
   api.post('/users', async (c) => {
     const { email, haslo } = await cialo(c);

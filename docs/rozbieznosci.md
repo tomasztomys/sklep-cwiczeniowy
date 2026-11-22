@@ -36,6 +36,17 @@ Te same 62 testy z `testy/api/` uruchomione na makiecie: 40 przechodzi, 22 nie. 
 
 ---
 
+### Tryby `SKLEP_BLEDY` na sklepie i na makiecie (etap 5)
+
+Testy z książki (`wzorzec/tests`, Chromium, bez testów wizualnych) uruchomione na sklepie i na makiecie z tym samym trybem wykrywają te same błędy:
+
+| Tryb | Testy z książki, które wykrywają błąd |
+| --- | --- |
+| `cena-kubka` | „strona kubka pokazuje nazwę i cenę” |
+| `losowa-kolejnosc` | „lista produktów zawiera trzy produkty” (API) i „katalog pokazuje trzy produkty” (z prawdopodobieństwem 5/6 w jednym przebiegu) |
+| `wolne-api` | „API produktów odpowiada w mniej niż 500 ms” |
+| `zmiana-stylu` | tylko testy wizualne (wzorce powstaną w etapie 6) |
+
 ## B. Sprzeczności i luki w książce
 
 ### B-1. Zarządzanie koszykiem, którego sklep nie ma
