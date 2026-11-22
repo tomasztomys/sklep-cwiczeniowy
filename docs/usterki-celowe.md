@@ -1,6 +1,6 @@
 # Celowe usterki dostępności
 
-Status: **szkic z etapu 1, do zatwierdzenia przez autora**.
+Status: **zatwierdzona 2026-11-22** (decyzje w `docs/decyzje.md`).
 
 Te usterki są zamierzone. Czytelnik szuka ich w rozdziałach 5 i 11 i pisze dla nich zgłoszenia w rozdziale 13.
 Sklep nie może ich naprawić ani dodać innych. Źródła zapisujemy jak w `docs/specyfikacja.md`.
@@ -30,7 +30,7 @@ Wszystkie cztery usterki są w stopce, więc występują na każdej stronie (ST-
 
 ## Warunki, które musi spełniać sklep
 
-**UC-1. Dokładny wynik axe.** Skan axe z tagami `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa` i `wcag22aa` na stronach `/`, `/produkty/kubek`, `/logowanie` i `/koszyk` (zalogowany, z produktem i bez) zgłasza dokładnie trzy reguły: `button-name`, `color-contrast` i `label`, każdą dla dokładnie jednego elementu w stopce [propozycja: jeden element na regułę]. Inne strony, np. `/produkty/notes`, dają ten sam wynik.
+**UC-1. Dokładny wynik axe.** Skan axe z tagami `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa` i `wcag22aa` na stronach `/`, `/produkty/kubek`, `/logowanie`, `/rejestracja` i `/koszyk` (zalogowany, z produktem i bez) zgłasza dokładnie trzy reguły: `button-name`, `color-contrast` i `label`, każdą dla dokładnie jednego elementu w stopce [propozycja: jeden element na regułę]. Inne strony, np. `/produkty/notes`, dają ten sam wynik.
 - R11 §11.2 «.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])»
 - R11 §11.2 «const strony = ['/', '/produkty/kubek', '/logowanie'];»
 

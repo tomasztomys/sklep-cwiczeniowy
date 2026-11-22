@@ -1,6 +1,6 @@
 # Rozbieżności: książka, specyfikacja i sklep
 
-Status: **lista z etapu 1, do rozstrzygnięcia przez autora**. Decyzje zapisuj w `docs/decyzje.md`.
+Status: **rozstrzygnięte 2026-11-22**, decyzje w `docs/decyzje.md`. Część A opisuje różnice makiety wobec specyfikacji, których makieta nie musi nadrabiać.
 
 Każda pozycja ma: miejsce, objaw i propozycję. Propozycja to zmiana sklepu, errata książki albo pozostawienie bez zmian.
 Identyfikatory wymagań (np. API-5) odnoszą się do `docs/specyfikacja.md`.

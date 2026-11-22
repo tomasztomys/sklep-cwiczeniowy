@@ -1,6 +1,6 @@
 # Specyfikacja sklepu ćwiczeniowego 1.0
 
-Status: **szkic z etapu 1, do zatwierdzenia przez autora**.
+Status: **zatwierdzona 2026-11-22** (decyzje w `docs/decyzje.md`).
 
 Ten dokument jest źródłem prawdy o zachowaniu sklepu. Nazwy dostępne, role, komunikaty, kody odpowiedzi,
 treść błędów, ciasteczka, nagłówki, zmienne środowiskowe i dane startowe są kontraktem z książką:
@@ -11,9 +11,10 @@ zmiana jednego znaku oznacza zmianę w tekście książki.
 Każde wymaganie ma identyfikator i źródło.
 
 - `R7 §7.2 «cytat»` – wymaganie wynika z książki: rozdział, podrozdział i dosłowny cytat. `W` to Wstęp, `DA`–`DF` to dodatki.
-- `[makieta]` – zachowanie makiety z `wzorzec/mock/sklep.js`, którego książka nie opisuje. Do zatwierdzenia.
-- `[plan]` – ustalenie z planu sklepu („Plan: sklep i repozytorium”), którego książka nie opisuje. Do zatwierdzenia.
-- `[propozycja]` – luka: książka czegoś wymaga albo sugeruje, ale nie mówi jak. Do decyzji, lista w `docs/rozbieznosci.md`.
+- `[makieta]` – zachowanie makiety z `wzorzec/mock/sklep.js`, którego książka nie opisuje. Zatwierdzone.
+- `[plan]` – ustalenie z planu sklepu („Plan: sklep i repozytorium”), którego książka nie opisuje. Zatwierdzone.
+- `[propozycja]` – ustalenie tam, gdzie książka czegoś wymaga, ale nie mówi jak. Zatwierdzone (`docs/decyzje.md`, część C).
+- `[decyzja B-n]` – zmiana sklepu przyjęta przy rozstrzyganiu rozbieżności z `docs/rozbieznosci.md`.
 
 Celowe usterki dostępności są opisane osobno w `docs/usterki-celowe.md`.
 
@@ -206,10 +207,11 @@ Celowe usterki dostępności są opisane osobno w `docs/usterki-celowe.md`.
 
 ### 4.4. Logowanie `/logowanie`
 
-**ST-30. Formularz** z polami „E-mail” (`type="email"`) i „Hasło” (`type="password"`) powiązanymi z etykietami oraz przyciskiem „Zaloguj się”. Na stronie jest jeden przycisk o tej nazwie.
+**ST-30. Formularz** z polami „E-mail” (`type="email"`, `placeholder="np. jan@example.com"` [decyzja B-11]) i „Hasło” (`type="password"`) powiązanymi z etykietami oraz przyciskiem „Zaloguj się”. Na stronie jest jeden przycisk o tej nazwie. Pod formularzem jest link „Załóż konto” do `/rejestracja` [decyzja B-4].
 - R6 §6.2 «await page.getByLabel('E-mail').fill('klient@sklep.test');»
 - R6 §6.2 «await page.getByLabel('Hasło').fill('Klient123!');»
 - R6 §6.2 «await page.getByRole('button', { name: 'Zaloguj się' }).click();»
+- DA A.4 «page.getByPlaceholder('np. jan@example.com')»
 
 **ST-31. Błędne dane** (nieznany e-mail albo złe hasło) dają w obszarze `alert` ten sam komunikat „Nieprawidłowy e-mail lub hasło”.
 - R6 §6.2 «await expect(page.getByRole('alert')).toHaveText('Nieprawidłowy e-mail lub hasło');»
@@ -246,6 +248,25 @@ Celowe usterki dostępności są opisane osobno w `docs/usterki-celowe.md`.
 - R11 §11.4 «await stronaKoszyka.zastosujKod('<img src=x onerror=alert(1)>');»
 - R11 §11.4 «await expect(stronaKoszyka.blad).toHaveText('Nieznany kod rabatowy');»
 
+**ST-47. Usuwanie pozycji** [decyzja B-1]. Każdy wiersz koszyka ma przycisk „Usuń” z `title="Usuń z koszyka"`. Kliknięcie wywołuje `DELETE /api/cart/items/{produktId}` i bez przeładowania strony usuwa wiersz oraz aktualizuje sumę. Po usunięciu ostatniej pozycji strona pokazuje „Koszyk jest pusty”.
+- DA A.4 «page.getByTitle('Usuń z koszyka')»
+- DA A.4 «wiersz.getByRole('button', { name: 'Usuń' })»
+
+**ST-48. Opróżnianie koszyka** [decyzja B-1]. Pod tabelą jest przycisk „Usuń wszystko”, który wywołuje `DELETE /api/cart` i pokazuje „Koszyk jest pusty”. Przy pustym koszyku przycisku nie ma.
+- R5 ćw. 2 «Zaloguj się, dodaj kubek do koszyka, użyj kodu JESIEN10 i opróżnij koszyk.»
+
+### 4.6. Rejestracja `/rejestracja` [decyzja B-4]
+
+**ST-50. Formularz** z nagłówkiem poziomu 1 „Rejestracja”, polami „E-mail” (`type="email"`) i „Hasło” (`type="password"`) z etykietami i przyciskiem „Załóż konto”.
+- R11 §11.4 «Dla pola kodu rabatowego i formularza rejestracji zaproponuj dane wejściowe»
+- R15 ćw. 1 «Zleć plannerowi plan logowania i rejestracji.»
+
+**ST-51. Wysłanie** wywołuje `POST /api/users`. Błąd z API (400, 409) pokazuje treść `blad` w obszarze `alert`. Treść pól nie jest wstawiana na stronę jako HTML (ST-46).
+
+**ST-52. Sukces** przenosi na `/logowanie?konto=zalozone`, gdzie w obszarze `status` jest „Konto zostało założone. Zaloguj się.”. Rejestracja nie loguje automatycznie (S-6).
+
+**ST-53. Dostęp.** Strona jest dostępna bez logowania. Zalogowany użytkownik też ją widzi i może założyć kolejne konto [propozycja].
+
 ---
 
 ## 5. API
@@ -273,6 +294,8 @@ Wspólne zasady:
 | `POST /api/logout` [propozycja] | `204` + usunięcie ciasteczka | `401` |
 | `GET /api/cart` | `200` koszyk | `401` |
 | `DELETE /api/cart` | `204` | `401` |
+| `PATCH /api/cart/items/{produktId}` [decyzja B-1] | `200` koszyk | `400` „Nieprawidłowa ilość”, `404` „Nie ma takiej pozycji w koszyku”, `401` |
+| `DELETE /api/cart/items/{produktId}` [decyzja B-1] | `200` koszyk | `404` „Nie ma takiej pozycji w koszyku”, `401` |
 | `POST /api/cart/items` | `201` koszyk | `400` „Nieprawidłowe dane” [propozycja], `400` „Nieprawidłowa ilość”, `404` „Nie ma takiego produktu”, `401` |
 | `POST /api/cart/discount` | `200` koszyk po rabacie | `400` „Nieznany kod rabatowy”, `400` „Kod rabatowy jest nieaktywny”, `401` |
 | `GET /api/orders/{id}` | `200` zamówienie | `403` „Brak dostępu”, `404` „Nie ma takiego zamówienia”, `401` |
@@ -302,7 +325,7 @@ Wspólne zasady:
 
 **API-5. `POST /api/cart/items`** z `{"produktId","ilosc"}` dodaje produkt i zwraca `201` z całym koszykiem. Ponowne dodanie tego samego produktu sumuje ilości. Kolejność sprawdzania [propozycja]:
 1. `produktId` nie jest liczbą całkowitą albo go brak: `400` „Nieprawidłowe dane”,
-2. `ilosc` nie jest liczbą całkowitą z zakresu 1–99 albo jej brak: `400` „Nieprawidłowa ilość” (górna granica: [propozycja]),
+2. `ilosc` nie jest liczbą całkowitą z zakresu 1–99 albo jej brak: `400` „Nieprawidłowa ilość” [decyzja B-5]. Gdy po zsumowaniu ilość pozycji przekroczyłaby 99, też `400` „Nieprawidłowa ilość”,
 3. produkt nie istnieje: `404` „Nie ma takiego produktu”.
 
 Źródła:
@@ -313,7 +336,7 @@ Wspólne zasady:
 - R9 §9.2 «Ilość 1 i bardzo duża ilość | Zależy od wymagań: zapytaj zespół»
 - R9 ćw. 2 «dwukrotne dodanie tego samego produktu (ilości się sumują), ilość 0 (400), nieistniejący produkt (404), opróżnienie koszyka (204, a potem pusty koszyk).»
 
-**API-6. `POST /api/cart/discount`** z `{"kod"}` stosuje kod do koszyka i zwraca `200` z koszykiem, w którym `suma` jest po rabacie. Rabat = `round(suma × procent) / 100` z zaokrągleniem połówek w górę, a suma po rabacie = suma − rabat. Przykład: 49,99 zł z `JESIEN10` daje 44,99 zł. Kod nieznany, pusty albo zapisany inną wielkością liter daje `400` „Nieznany kod rabatowy”. Kod nieaktywny daje `400` „Kod rabatowy jest nieaktywny”. Trwałość kodu w koszyku: [propozycja] kod zostaje zapamiętany do opróżnienia koszyka, a `GET /api/cart` zwraca sumę po rabacie.
+**API-6. `POST /api/cart/discount`** z `{"kod"}` stosuje kod do koszyka i zwraca `200` z koszykiem, w którym `suma` jest po rabacie. Rabat = `round(suma × procent) / 100` z zaokrągleniem połówek w górę, a suma po rabacie = suma − rabat. Przykład: 49,99 zł z `JESIEN10` daje 44,99 zł. Kod nieznany, pusty albo zapisany inną wielkością liter daje `400` „Nieznany kod rabatowy”. Kod nieaktywny daje `400` „Kod rabatowy jest nieaktywny”. Trwałość kodu w koszyku: [propozycja] kod zostaje zapamiętany do opróżnienia koszyka (`DELETE /api/cart` albo usunięcie ostatniej pozycji), a każda odpowiedź koszyka zwraca sumę po rabacie, przeliczoną po każdej zmianie pozycji.
 - R2 §2.1 «POST /api/cart/discount z kodem JESIEN10 zwraca status 200 i sumę pomniejszoną o 10%; nieistniejący kod daje błąd 400»
 - R13 §13.1 «expect(Koszyk.parse(JSON.parse(tresc)).suma).toBe(44.99);»
 - R4 §4.2 «return Math.round(kwota * procent) / 100;»
@@ -332,6 +355,11 @@ Wspólne zasady:
 
 **API-9. `DELETE /api/users/me`** usuwa konto zalogowanego użytkownika, jego koszyk i sesje, i zwraca `204`. Usunięcie kont testowych z DS-2: [propozycja] dozwolone; przywraca je restart sklepu.
 - R8 §8.3 «po teście usuwa konto (DELETE /api/users/me).»
+
+**API-10. `PATCH /api/cart/items/{produktId}`** [decyzja B-1] z `{"ilosc"}` ustawia ilość pozycji (nie dodaje) i zwraca `200` z koszykiem. Ilość spoza 1–99 albo nie całkowita daje `400` „Nieprawidłowa ilość”. Produkt, którego nie ma w koszyku, daje `404` „Nie ma takiej pozycji w koszyku”.
+- R5 §5.3 «Zmiana ilości produktu w koszyku»
+
+**API-11. `DELETE /api/cart/items/{produktId}`** [decyzja B-1] usuwa pozycję i zwraca `200` z koszykiem. Produkt, którego nie ma w koszyku, daje `404` „Nie ma takiej pozycji w koszyku”.
 
 ---
 
@@ -406,7 +434,7 @@ Wspólne zasady:
 
 Te wymagania wynikają z tego, jak kod z książki szuka elementów. Ich złamanie psuje przykłady, choć sklep działałby poprawnie.
 
-**T-1. Unikalne nazwy przycisków.** Na każdej stronie przyciski „Zaloguj się”, „Wyloguj się”, „Zastosuj” i „Koszyk” występują najwyżej raz. Na stronie produktu „Dodaj do koszyka” występuje raz, a w katalogu raz w każdym elemencie listy. Dlatego „Zaloguj się” w nagłówku jest linkiem (ST-2).
+**T-1. Unikalne nazwy przycisków.** Na każdej stronie przyciski „Zaloguj się”, „Wyloguj się”, „Zastosuj”, „Załóż konto”, „Usuń wszystko” i „Koszyk” występują najwyżej raz. Żaden przycisk poza „Koszyk” i „Dodaj do koszyka” nie zawiera słowa „koszyk”, bo lokator `getByRole('button', { name: 'Koszyk' })` dopasowuje fragment nazwy [decyzja B-8]. Na stronie produktu „Dodaj do koszyka” występuje raz, a w katalogu raz w każdym elemencie listy. Dlatego „Zaloguj się” w nagłówku jest linkiem (ST-2).
 
 **T-2. Jeden `status` i jeden `alert`.** Na każdej stronie jest najwyżej jeden element o roli `status` i najwyżej jeden o roli `alert`. Stopka nie może mieć takich ról.
 
