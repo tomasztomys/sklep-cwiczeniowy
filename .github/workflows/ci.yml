@@ -53,7 +53,7 @@ jobs:
       - name: Start kontenera i czekanie na HEALTHCHECK
         run: |
           docker run -d --name sklep -p 3000:3000 sklep-cwiczeniowy:ci
-          for i in $(seq 1 30); do
+          for _ in $(seq 1 30); do
             stan=$(docker inspect -f '{{.State.Health.Status}}' sklep)
             [ "$stan" = "healthy" ] && exit 0
             sleep 2
@@ -66,3 +66,16 @@ jobs:
           BASE_URL: http://localhost:3000
       - if: always()
         run: docker logs sklep
+
+  akceptacja:
+    name: Kod z książki na obrazie sklepu (mutacje i tryby błędów)
+    needs: [obraz]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - name: Testy akceptacyjne
+        run: narzedzia/akceptacja.sh

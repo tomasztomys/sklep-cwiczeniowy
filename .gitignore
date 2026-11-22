@@ -17,3 +17,5 @@ playwright/.auth/
 .claude/settings.local.json
 .idea/
 .DS_Store
+narzedzia/.wyniki-*.json
+akceptacja/node_modules/

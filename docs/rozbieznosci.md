@@ -141,6 +141,67 @@ Testy z książki (`wzorzec/tests`, Chromium, bez testów wizualnych) uruchomion
 
 ---
 
+## E. Kod z książki jako testy akceptacyjne (etap 6)
+
+`akceptacja/` składa skrypt `narzedzia/zloz-akceptacje.py` z bloków kodu w `ksiazka/`. Każdy z 140 bloków jest użyty albo pominięty z powodem: przykłady celowo złe, szkice z „// ...”, fragmenty poglądowe, polecenia terminala. Całość sprawdza `narzedzia/akceptacja.sh`. Skrypt buduje obraz sklepu i uruchamia testy z książki w obrazie `mcr.microsoft.com/playwright:v1.65.1-noble`.
+
+### Wyniki
+
+| Sprawdzenie | Wynik |
+| --- | --- |
+| `npm run check` z książki (tsc, ESLint z rozdziałów 4, 7, 8 i 17) | przechodzi, z jednym ostrzeżeniem (B-14) |
+| Testy z książki na obrazie sklepu (Chromium) | 50 przechodzi; nie przechodzą tylko trzy skany axe, które według rozdziału 11.2 mają się wyłożyć |
+| Test „newsletter” z `test.fail()` | przechodzi jako oczekiwany błąd |
+| Testy na wspólnym koncie (rozdziały 6–7) | przechodzą po kolei (`--workers=1`), równolegle psują sobie wyniki, dokładnie jak ostrzega rozdział 7.3 |
+| Nagranie HAR (rozdział 9.5) | działa po nagraniu z `NAGRAJ_HAR=1` pod tym samym adresem sklepu (zob. B-17) |
+| Wzorce wizualne (rozdział 11.1) | wygenerowane poleceniem z książki w obrazie Dockera, trzy przebiegi bez różnic; `zmiana-stylu` wykrywają oba testy |
+| Mutacje z rozdziału 16 | `bez-komunikatu`, `blad-koszyka`, `pusty-katalog` wykrywają testy koszyka i katalogu jak w tabeli; test z generatora (15.3) przetrwał wszystkie cztery, jak w książce; `cena-kubka` zob. B-15 |
+| Test niestabilny (rozdział 10.2) z `wolne-api` | nie przeszedł w 9 z 10 powtórzeń (książka: 6 z 10, „u ciebie liczby będą inne”); test z asercją web-first 10 z 10 |
+| Ćwiczenia z rozdziałów 4 i 5 uruchomione na sklepie | wynik zgodny z komentarzami w książce |
+| Test obciążeniowy k6 (rozdział 11.3) | p95 = 6 ms (próg 500 ms), 0% błędów |
+| Workflow z rozdziałów 12, 13 i 19 | `actionlint` bez uwag |
+| Ewaluacje asystenta (rozdział 18) | tylko kompilacja i ESLint; uruchomienie wymaga modelu językowego |
+
+### B-14. Ostrzeżenie ESLint w teście logowania
+
+- **Miejsce:** R6 §6.2, `tests/logowanie.spec.ts`.
+- **Objaw:** reguła `playwright/consistent-spacing-between-blocks` z konfiguracji z rozdziału 7 zgłasza brak pustej linii przed `await expect(...)` po bloku `test.step`. Rozdział 7 ćw. 7 wymaga, żeby `npm run check` przechodził bez ostrzeżeń.
+- **Propozycja (errata):** pusta linia między `});` kończącym `test.step` a `await expect(page.getByRole('button', { name: 'Wyloguj się' }))`.
+
+### B-15. Mutacje działają tylko w testach importujących `./fixtures.ts`
+
+- **Miejsca:** R16 §16.2 (tabela zabójstw: `cena-kubka` wykrywa „strona kubka pokazuje nazwę i cenę”), R6 §6.2 (`tests/katalog.spec.ts` importuje z `@playwright/test`), R8 ćw. 2 (przepisz na fixture testy, „które wymagają zalogowania”).
+- **Objaw:** mutacja jest podpinana w fixture `page` z `tests/fixtures.ts`. Test ceny kubka z rozdziału 6 nie wymaga logowania, więc po ćwiczeniu z rozdziału 8 nadal importuje z `@playwright/test`, a mutacja `cena-kubka` go nie dotyczy. Sprawdzone: z importem z `@playwright/test` test przechodzi mimo mutacji, z importem z `./fixtures.ts` ją wykrywa.
+- **Propozycja (errata):** w R8 ćw. 2 „przepisz importy we wszystkich plikach testów na `./fixtures.ts`, a testy wymagające zalogowania na fixture `klient`”; w R16 przy fixture `page` zdanie: „Mutacja działa tylko w testach, które importują `test` z `./fixtures.ts`”.
+
+### B-16. Nazwa testu w tabeli zabójstw
+
+- **Miejsce:** R16 §16.2, tabela: test „katalog pokazuje produkty”, który sprawdza tylko nagłówek.
+- **Objaw:** ten test w rozdziale 6 nazywa się „katalog pokazuje listę produktów”.
+- **Propozycja (errata):** w R16 użyć nazwy z rozdziału 6.
+
+### B-17. Nagranie HAR nie działa pod innym adresem sklepu
+
+- **Miejsca:** R9 §9.5 (nagranie trafia do repozytorium), R12 (w CI sklep jest pod `http://sklep:3000`).
+- **Objaw:** HAR zapisuje pełne adresy. Nagranie zrobione pod `http://localhost:3000` nie pasuje do żądań pod innym adresem, więc Playwright przerywa je, a test „katalog z nagrania” pada w CI. Sprawdzone pod `http://host.docker.internal:3000`.
+- **Propozycja (errata):** ramka w R9 §9.5: „Nagranie zawiera adres sklepu, więc odtwarzanie działa tylko pod tym samym adresem. Test z nagraniem uruchamiaj lokalnie albo oznacz go tagiem, który CI pomija”.
+
+### B-18. Mutacje przez `page.route` tylko pod `localhost`
+
+- **Miejsce:** R16 §16.2.
+- **Objaw:** Chromium z Playwrighta 1.65.1 (mechanizm Local Network Access) blokuje żądania strony podmienionej przez `route.fulfill`, gdy sklep jest pod adresem z sieci prywatnej, np. `http://sklep:3000` w CI. Pod `localhost`, jak w rozdziale 16, działa. Czytelnik, który uruchomi mutacje w CI, zobaczy, że padają prawie wszystkie testy.
+- **Propozycja (errata, do decyzji):** zdanie w R16: „Mutacje uruchamiaj lokalnie, ze sklepem pod `http://localhost:3000`”.
+
+### B-19. Zmienna `karta` w dodatku A
+
+- **Miejsce:** DA A.6, przykład z `page.waitForResponse`.
+- **Objaw:** przykład używa zmiennej `karta`, której ściąga nie definiuje.
+- **Propozycja (errata):** dopisać linię `const karta = page.getByRole('listitem').filter({ hasText: 'Kubek' });`.
+
+### Uwaga bez propozycji zmiany
+
+Test wizualny strony kubka z tolerancją 1% (R11 §11.1) nie wykrywa zmiany ceny z 49,99 zł na 59,99 zł, bo zmienia się mniej niż 1% pikseli. Jest to zgodne z książką, bo tabela zabójstw nie przypisuje tej mutacji testom wizualnym.
+
 ## C. Ustalenia spoza książki do zatwierdzenia
 
 Te ustalenia są w specyfikacji, ale nie wynikają z tekstu książki. Pochodzą z makiety albo planu, albo są propozycją. Zatwierdź albo zmień każde z nich.

@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint';
 import playwright from 'eslint-plugin-playwright';
 
 export default tseslint.config(
-  { ignores: ['wzorzec/', 'ksiazka/', 'node_modules/', 'test-results/', 'playwright-report/', 'publiczne/'] },
+  { ignores: ['wzorzec/', 'ksiazka/', 'akceptacja/', 'node_modules/', 'test-results/', 'playwright-report/', 'publiczne/'] },
   js.configs.recommended,
   ...tseslint.configs.strictTypeChecked,
   {
