@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bramka:
+    name: Bramka i testy z kodu
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: raport-bramka
+          path: playwright-report/
+          retention-days: 7
+
+  obraz:
+    name: Obraz Dockera i testy na kontenerze
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: docker build -t sklep-cwiczeniowy:ci .
+      - name: Start kontenera i czekanie na HEALTHCHECK
+        run: |
+          docker run -d --name sklep -p 3000:3000 sklep-cwiczeniowy:ci
+          for i in $(seq 1 30); do
+            stan=$(docker inspect -f '{{.State.Health.Status}}' sklep)
+            [ "$stan" = "healthy" ] && exit 0
+            sleep 2
+          done
+          docker logs sklep
+          exit 1
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+        env:
+          BASE_URL: http://localhost:3000
+      - if: always()
+        run: docker logs sklep

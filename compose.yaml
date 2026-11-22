@@ -1,0 +1,10 @@
+# Sklep zbudowany z kodu w tym repozytorium. Czytelnik używa gotowego obrazu z GHCR (rozdział 3).
+services:
+  sklep:
+    build: .
+    image: sklep-cwiczeniowy:lokalny
+    ports:
+      - "3000:3000"
+    environment:
+      SKLEP_DANE_STARTOWE: "tak"
+      SKLEP_BLEDY: ""
