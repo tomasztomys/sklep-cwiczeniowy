@@ -36,14 +36,13 @@ export function utworzApi(sklep: Sklep): Hono<Zmienne> {
     const { email, haslo } = await cialo(c);
     if (!niepustyTekst(email) || !niepustyTekst(haslo)) return blad(c, 400, 'Brak e-maila lub hasła');
     if (!/^[^\s@]+@[^\s@]+$/.test(email)) return blad(c, 400, 'Nieprawidłowy e-mail');
-    if (sklep.istnieje(email)) return blad(c, 409, 'Użytkownik już istnieje');
-    sklep.dodajUzytkownika(email, haslo);
+    if (!(await sklep.dodajUzytkownika(email, haslo))) return blad(c, 409, 'Użytkownik już istnieje');
     return c.json({ email, rola: 'klient' }, 201);
   });
 
   api.post('/login', async (c) => {
     const { email, haslo } = await cialo(c);
-    const token = typeof email === 'string' && typeof haslo === 'string' ? sklep.zaloguj(email, haslo) : undefined;
+    const token = typeof email === 'string' && typeof haslo === 'string' ? await sklep.zaloguj(email, haslo) : undefined;
     if (!token || typeof email !== 'string') return blad(c, 401, 'Nieprawidłowy e-mail lub hasło');
     setCookie(c, CIASTECZKO, token, { httpOnly: true, sameSite: 'Lax', path: '/' });
     return c.json({ email, rola: sklep.rola(email) });

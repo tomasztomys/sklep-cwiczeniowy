@@ -10,5 +10,5 @@
     "noUncheckedIndexedAccess": true,
     "types": ["node"]
   },
-  "include": ["src", "testy", "playwright.config.ts"]
+  "include": ["src", "testy", "narzedzia", "playwright.config.ts"]
 }

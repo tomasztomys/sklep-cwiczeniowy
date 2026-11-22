@@ -265,6 +265,8 @@ Celowe usterki dostępności są opisane osobno w `docs/usterki-celowe.md`.
 
 **ST-52. Sukces** przenosi na `/logowanie?konto=zalozone`, gdzie w obszarze `status` jest „Konto zostało założone. Zaloguj się.”. Rejestracja nie loguje automatycznie (S-6).
 
+Pod formularzem jest link „Przejdź do logowania” do `/logowanie`. Nie „Zaloguj się”, żeby na stronie był jeden link o tej nazwie (T-1).
+
 **ST-53. Dostęp.** Strona jest dostępna bez logowania. Zalogowany użytkownik też ją widzi i może założyć kolejne konto [propozycja].
 
 ---
@@ -434,7 +436,7 @@ Wspólne zasady:
 
 Te wymagania wynikają z tego, jak kod z książki szuka elementów. Ich złamanie psuje przykłady, choć sklep działałby poprawnie.
 
-**T-1. Unikalne nazwy przycisków.** Na każdej stronie przyciski „Zaloguj się”, „Wyloguj się”, „Zastosuj”, „Załóż konto”, „Usuń wszystko” i „Koszyk” występują najwyżej raz. Żaden przycisk poza „Koszyk” i „Dodaj do koszyka” nie zawiera słowa „koszyk”, bo lokator `getByRole('button', { name: 'Koszyk' })` dopasowuje fragment nazwy [decyzja B-8]. Na stronie produktu „Dodaj do koszyka” występuje raz, a w katalogu raz w każdym elemencie listy. Dlatego „Zaloguj się” w nagłówku jest linkiem (ST-2).
+**T-1. Unikalne nazwy przycisków.** Na każdej stronie przyciski „Zaloguj się”, „Wyloguj się”, „Zastosuj”, „Załóż konto”, „Usuń wszystko” i „Koszyk” występują najwyżej raz, a link „Zaloguj się” jest tylko w nagłówku. Żaden przycisk poza „Koszyk” i „Dodaj do koszyka” nie zawiera słowa „koszyk”, bo lokator `getByRole('button', { name: 'Koszyk' })` dopasowuje fragment nazwy [decyzja B-8]. Na stronie produktu „Dodaj do koszyka” występuje raz, a w katalogu raz w każdym elemencie listy. Dlatego „Zaloguj się” w nagłówku jest linkiem (ST-2).
 
 **T-2. Jeden `status` i jeden `alert`.** Na każdej stronie jest najwyżej jeden element o roli `status` i najwyżej jeden o roli `alert`. Stopka nie może mieć takich ról.
 

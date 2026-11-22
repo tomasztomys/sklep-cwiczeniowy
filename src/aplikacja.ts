@@ -1,6 +1,9 @@
 import { Hono } from 'hono';
+import { serveStatic } from '@hono/node-server/serve-static';
 import { utworzApi } from './api.ts';
+import type { Konfiguracja } from './konfiguracja.ts';
 import type { Sklep } from './stan.ts';
+import { utworzStrony } from './strony/trasy.ts';
 
 // Nagłówki bezpieczeństwa na każdej odpowiedzi (specyfikacja B-1).
 const NAGLOWKI_BEZPIECZENSTWA: Record<string, string> = {
@@ -9,7 +12,7 @@ const NAGLOWKI_BEZPIECZENSTWA: Record<string, string> = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
 };
 
-export function utworzAplikacje(sklep: Sklep): Hono {
+export function utworzAplikacje(sklep: Sklep, konfiguracja: Konfiguracja): Hono {
   const app = new Hono();
 
   app.use(async (c, next) => {
@@ -19,6 +22,9 @@ export function utworzAplikacje(sklep: Sklep): Hono {
 
   app.route('/api', utworzApi(sklep));
   app.all('/api/*', (c) => c.json({ blad: 'Nie znaleziono' }, 404));
+  // Obrazy, czcionki i style z katalogu publiczne/ (K-9). Ścieżka względem katalogu roboczego.
+  app.use('*', serveStatic({ root: './publiczne' }));
+  app.route('/', utworzStrony(sklep, konfiguracja));
 
   app.onError((blad, c) => {
     console.error(blad);

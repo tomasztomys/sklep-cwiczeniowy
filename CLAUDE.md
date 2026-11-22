@@ -39,7 +39,9 @@ portu 3000, więc uruchamiaj je po kolei albo ustaw `PORT`.
 
 ## Struktura
 
-- `src/serwer.ts` – start serwera, `src/aplikacja.ts` – trasy, `src/konfiguracja.ts` – zmienne środowiskowe
+- `src/serwer.ts` – start serwera, `src/aplikacja.ts` – składanie aplikacji, `src/konfiguracja.ts` – zmienne środowiskowe
+- `src/stan.ts` – dane w pamięci, `src/api.ts` – API, `src/strony/` – strony i układ ze stopką z celowymi usterkami
+- `publiczne/` – style, czcionka Inter (OFL), obrazy produktów (`narzedzia/generuj-obrazy.ts`)
 - `testy/` – testy sklepu (identyfikator wymagania w nazwie `describe` albo testu)
 - `Dockerfile`, `compose.yaml`, `.github/workflows/ci.yml`
 

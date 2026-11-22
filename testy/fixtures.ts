@@ -11,9 +11,18 @@ export const nowyKlient = (): DaneKlienta => ({ email: `test-${randomUUID()}@skl
 interface Fixtures {
   apiKlienta: APIRequestContext;
   apiAdmina: APIRequestContext;
+  /** Nowy klient zalogowany w przeglądarce testu (jak fixture `klient` z rozdziału 8). */
+  klient: DaneKlienta;
 }
 
 export const test = base.extend<Fixtures>({
+  klient: async ({ page }, use) => {
+    const dane = nowyKlient();
+    await expect(await page.request.post('/api/users', { data: dane })).toBeOK();
+    await expect(await page.request.post('/api/login', { data: dane })).toBeOK();
+    await use(dane);
+    await page.request.delete('/api/users/me');
+  },
   apiKlienta: async ({ playwright, baseURL }, use) => {
     const api = await playwright.request.newContext({ baseURL });
     const dane = nowyKlient();

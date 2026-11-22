@@ -1,5 +1,6 @@
 // Stan sklepu w pamięci (specyfikacja K-5, DS-1–DS-4). Kwoty liczymy w groszach.
-import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
+import { randomBytes, scrypt, scryptSync, timingSafeEqual } from 'node:crypto';
+import { promisify } from 'node:util';
 
 export type Rola = 'klient' | 'admin';
 
@@ -60,7 +61,11 @@ const KODY_STARTOWE: Record<string, KodRabatowy> = {
 
 const naZlote = (gr: number): number => gr / 100;
 
-const skrotHasla = (haslo: string, sol: Buffer): Buffer => scryptSync(haslo, sol, 32);
+// Skrót liczony poza pętlą zdarzeń, żeby rejestracje i logowania nie blokowały innych żądań (N-5).
+// Koszt obniżony, bo to sklep ćwiczeniowy z hasłami testowymi, a nie ochrona prawdziwych kont.
+const OPCJE_SCRYPT = { N: 1024, r: 8, p: 1 };
+const scryptAsync = promisify(scrypt) as (haslo: string, sol: Buffer, dlugosc: number, opcje: typeof OPCJE_SCRYPT) => Promise<Buffer>;
+const skrotHasla = (haslo: string, sol: Buffer): Promise<Buffer> => scryptAsync(haslo, sol, 32, OPCJE_SCRYPT);
 
 export class Sklep {
   readonly produkty: readonly Produkt[];
@@ -74,30 +79,40 @@ export class Sklep {
     this.produkty = daneStartowe ? PRODUKTY_STARTOWE : [];
     this.kody = daneStartowe ? KODY_STARTOWE : {};
     if (daneStartowe) {
-      this.dodajUzytkownika('klient@sklep.test', 'Klient123!', 'klient');
-      this.dodajUzytkownika('admin@sklep.test', 'Admin123!', 'admin');
+      this.dodajUzytkownikaOdRazu('klient@sklep.test', 'Klient123!', 'klient');
+      this.dodajUzytkownikaOdRazu('admin@sklep.test', 'Admin123!', 'admin');
       this.zamowienia.set(1, { id: 1, wlasciciel: 'admin@sklep.test', pozycje: new Map([[7, 1]]) });
     }
   }
 
   // --- konta i sesje ---
 
-  istnieje(email: string): boolean {
-    return this.uzytkownicy.has(email);
+
+  // Tylko dla kont startowych: przy starcie blokowanie nie przeszkadza.
+  private dodajUzytkownikaOdRazu(email: string, haslo: string, rola: Rola): void {
+    const sol = randomBytes(16);
+    this.uzytkownicy.set(email, { rola, sol, skrot: scryptSync(haslo, sol, 32, OPCJE_SCRYPT) });
   }
 
-  dodajUzytkownika(email: string, haslo: string, rola: Rola = 'klient'): void {
+  /** Zwraca false, gdy konto już istnieje (także gdy powstało w trakcie liczenia skrótu). */
+  async dodajUzytkownika(email: string, haslo: string): Promise<boolean> {
+    if (this.uzytkownicy.has(email)) return false;
     const sol = randomBytes(16);
-    this.uzytkownicy.set(email, { rola, sol, skrot: skrotHasla(haslo, sol) });
+    const skrot = await skrotHasla(haslo, sol);
+    if (this.uzytkownicy.has(email)) return false;
+    this.uzytkownicy.set(email, { rola: 'klient', sol, skrot });
+    return true;
   }
 
   rola(email: string): Rola | undefined {
     return this.uzytkownicy.get(email)?.rola;
   }
 
-  zaloguj(email: string, haslo: string): string | undefined {
+  async zaloguj(email: string, haslo: string): Promise<string | undefined> {
     const u = this.uzytkownicy.get(email);
-    if (!u || !timingSafeEqual(u.skrot, skrotHasla(haslo, u.sol))) return undefined;
+    if (!u) return undefined;
+    if (!timingSafeEqual(u.skrot, await skrotHasla(haslo, u.sol))) return undefined;
+    if (this.uzytkownicy.get(email) !== u) return undefined;
     const token = randomBytes(32).toString('base64url');
     this.sesje.set(token, email);
     return token;

@@ -1,0 +1,2 @@
+/* Tryb SKLEP_BLEDY=zmiana-stylu: przyciski wyglądają inaczej, treść i układ zostają (rozdział 7 specyfikacji). */
+button, .btn { border-radius: 0 !important; padding: .8rem 1.6rem !important; background: #c62828 !important; color: #fff !important; border-color: #c62828 !important; }

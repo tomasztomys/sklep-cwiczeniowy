@@ -117,6 +117,12 @@ Te same 62 testy z `testy/api/` uruchomione na makiecie: 40 przechodzi, 22 nie. 
 - **Objaw:** w sklepie nie ma takiego pola.
 - **Propozycja (zmiana sklepu):** dodać `placeholder="np. jan@example.com"` do pola „E-mail” na `/logowanie`. Nie zmienia to nazwy dostępnej ani wyniku axe.
 
+### B-13. Klawisz Tab w WebKit na macOS
+
+- **Miejsce:** R11 §11.2, test «przycisk dodawania do koszyka działa z klawiatury», oraz R7 ćw. 8 (testy we wszystkich trzech przeglądarkach).
+- **Objaw:** WebKit z Playwrighta na macOS domyślnie nie przenosi fokusu klawiszem Tab na przyciski, tak jak Safari bez opcji „Naciśnij Tab, aby podświetlić każdy element”. Test pada w WebKit na Macu, choć sklep jest poprawny. Na Linuksie i w obrazie Dockera przechodzi we wszystkich przeglądarkach (sprawdzone w etapie 4).
+- **Propozycja (errata, do decyzji):** ramka „Stan na XI 2026” przy teście klawiatury: na macOS uruchamiaj go w Chromium albo w obrazie Dockera, a w WebKit pomiń go adnotacją `test.skip(browserName === 'webkit' && process.platform === 'darwin', '…')`.
+
 ### B-12. Adresy do uzupełnienia
 
 - **Miejsca:** Wstęp «[DO UZUPEŁNIENIA: adres repozytorium]», R3 §3.3 i R12 «ghcr.io/AUTOR/sklep-cwiczeniowy:1.0».
