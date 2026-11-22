@@ -1,6 +1,5 @@
 import { test, expect } from './fixtures.ts';
 
-// UZUPEŁNIENIE (etap 6): rozdział 10.2 celowo przepuszcza pierwszy test przez bramkę
 /* eslint-disable playwright/no-wait-for-timeout, playwright/prefer-web-first-assertions */
 
 test('niestabilny: sztywne czekanie', async ({ klient, page }) => {

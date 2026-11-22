@@ -25,7 +25,7 @@ U = '// UZUPEŁNIENIE (etap 6): '
 # (operacja, blok | None, argumenty...)
 MANIFEST = [
     # --- rozdział 3–5: projekt, ćwiczenia z TypeScriptu i HTTP ---
-    ('plik', r(3, 157), 'compose.yaml'),
+    ('plik', r(3, 159), 'compose.yaml'),
     ('zamien', None, 'compose.yaml', 'image: ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0', 'image: ${OBRAZ_SKLEPU:-ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0}'),
     ('plik', r(4, 39), 'tsconfig.json'),
     ('plik', r(4, 60), 'cwiczenia/rozdzial-04/pierwszy.ts'),
@@ -52,11 +52,7 @@ MANIFEST = [
     ('plik', r(6, 89), 'tests/katalog.spec.ts'),
     ('plik', r(6, 115), 'tests/logowanie.spec.ts'),
     ('pomin', r(6, 191), 'szkic z Codegen bez asercji, celowo słaby'),
-    ('plik', r(6, 218), 'tests/r06-dwa-kubki.spec.ts'),
-    ('zamien', None, 'tests/r06-dwa-kubki.spec.ts',
-     "  await expect(page.getByRole('button', { name: 'Wyloguj się' })).toBeVisible();\n",
-     "  await expect(page.getByRole('button', { name: 'Wyloguj się' })).toBeVisible();\n  " + U + "obejście ze wspólnym kontem z rozdziału 7.3\n  await page.request.delete('/api/cart');\n"),
-    ('zamien', None, 'tests/r06-dwa-kubki.spec.ts', PW, PW + "\n" + U + "testy na wspólnym koncie po kolei (rozdział 7.3)\ntest.describe.configure({ mode: 'serial' });\n"),
+    ('plik', r(6, 219), 'tests/koszyk.spec.ts'),
     # --- rozdział 7 ---
     ('pomin', r(5, 61), 'fragment poglądowy: trzy lokatory bez akcji (sprawdzone testami sklepu T-8)'),
     ('pomin', r(7, 35), 'fragment poglądowy: opcje lokatorów bez akcji'),
@@ -68,15 +64,12 @@ MANIFEST = [
     ('opakuj', r(7, 118), 'tests/fragmenty.spec.ts', "test('R7 §7.2 listy elementów', async ({ page }) => {\n  await page.goto('/');\n", "});"),
     ('pomin', r(7, 146), 'zestawienie złej i dobrej asercji; zła celowo zawodna'),
     ('pomin', r(7, 164), 'test z rozdziału 1 przed poprawą, celowo słaby'),
-    ('plik', r(7, 175), 'tests/r07-kubek.spec.ts', PW + "\n" + U + "testy na wspólnym koncie po kolei (rozdział 7.3)\ntest.describe.configure({ mode: 'serial' });\n\n"),
-    ('zamien', None, 'tests/r07-kubek.spec.ts',
-     "  await expect(page.getByRole('button', { name: 'Wyloguj się' })).toBeVisible();\n",
-     "  await expect(page.getByRole('button', { name: 'Wyloguj się' })).toBeVisible();\n  " + U + "obejście ze wspólnym kontem z rozdziału 7.3\n  await page.request.delete('/api/cart');\n"),
-    ('test', r(7, 198), 'tests/r07-kubek.spec.ts'),
-    ('opakuj', r(7, 239), 'tests/fragmenty.spec.ts', "test('R7 §7.5 asercje miękkie', async ({ page }) => {\n  await page.goto('/produkty/kubek');\n", "});"),
-    ('opakuj', r(7, 251), 'tests/fragmenty.spec.ts', "test('R7 §7.5 własny komunikat', async ({ klient, page }) => {\n  await page.goto('/produkty/kubek');\n  await page.getByRole('button', { name: 'Dodaj do koszyka' }).click();\n", "});"),
-    ('opakuj', r(7, 264), 'tests/fragmenty.spec.ts', "test('R7 §7.5 expect.poll', async ({ klient, page }) => {\n  await page.goto('/produkty/kubek');\n  await page.getByRole('button', { name: 'Dodaj do koszyka' }).click();\n", "});"),
-    ('plik', r(7, 285), 'eslint.config.mjs'),
+    ('test', r(7, 175), 'tests/koszyk.spec.ts'),
+    ('test', r(7, 199), 'tests/katalog.spec.ts'),
+    ('opakuj', r(7, 240), 'tests/fragmenty.spec.ts', "test('R7 §7.5 asercje miękkie', async ({ page }) => {\n  await page.goto('/produkty/kubek');\n", "});"),
+    ('opakuj', r(7, 252), 'tests/fragmenty.spec.ts', "test('R7 §7.5 własny komunikat', async ({ klient, page }) => {\n  await page.goto('/produkty/kubek');\n  await page.getByRole('button', { name: 'Dodaj do koszyka' }).click();\n", "});"),
+    ('opakuj', r(7, 265), 'tests/fragmenty.spec.ts', "test('R7 §7.5 expect.poll', async ({ klient, page }) => {\n  await page.goto('/produkty/kubek');\n  await page.getByRole('button', { name: 'Dodaj do koszyka' }).click();\n", "});"),
+    ('plik', r(7, 286), 'eslint.config.mjs'),
     # --- rozdział 8 ---
     ('plik', r(8, 20), 'tests/strony/strona-produktu.ts'),
     ('plik', r(8, 50), 'tests/strony/strona-koszyka.ts'),
@@ -84,16 +77,17 @@ MANIFEST = [
     ('zamien', None, 'tests/katalog.spec.ts', PW, "// UZUPEŁNIENIE (etap 6): import po ćwiczeniu 2 z rozdziału 8\n" + FIX),
     ('zamien', None, 'tests/logowanie.spec.ts', PW, "// UZUPEŁNIENIE (etap 6): import po ćwiczeniu 2 z rozdziału 8\n" + FIX),
     ('plik', r(8, 142), 'tests/koszyk.spec.ts'),
-    ('zamien_blokiem', r(8, 159), 'eslint.config.mjs', "    rules: {\n      'playwright/no-wait-for-timeout': 'error',\n      'playwright/no-raw-locators': 'warn',\n    },", 6),
-    ('plik', r(8, 185), 'tests/dane.ts'),
-    ('plik', r(8, 218), 'tests/auth.setup.ts'),
-    ('sprawdz_w', r(8, 237), 'playwright.config.ts'),
-    ('plik', r(8, 248), 'tests/admin.spec.ts'),
-    ('plik', r(8, 273), '.env'),
-    ('sprawdz_w', r(8, 281), 'playwright.config.ts'),
-    ('sprawdz_w', r(8, 296), 'playwright.config.ts'),
-    ('sprawdz_w', r(8, 309), 'playwright.config.ts'),
-    ('pomin', r(8, 324), 'ilustracja tagów z treścią „// ...”'),
+    ('test', r(8, 155), 'tests/koszyk.spec.ts'),
+    ('zamien_blokiem', r(8, 170), 'eslint.config.mjs', "    rules: {\n      'playwright/no-wait-for-timeout': 'error',\n      'playwright/no-raw-locators': 'warn',\n    },", 6),
+    ('plik', r(8, 196), 'tests/dane.ts'),
+    ('plik', r(8, 229), 'tests/auth.setup.ts'),
+    ('sprawdz_w', r(8, 248), 'playwright.config.ts'),
+    ('plik', r(8, 259), 'tests/admin.spec.ts'),
+    ('plik', r(8, 284), '.env'),
+    ('sprawdz_w', r(8, 292), 'playwright.config.ts'),
+    ('sprawdz_w', r(8, 307), 'playwright.config.ts'),
+    ('sprawdz_w', r(8, 320), 'playwright.config.ts'),
+    ('pomin', r(8, 335), 'ilustracja tagów z treścią „// ...”'),
     # --- rozdział 9 ---
     ('plik', r(9, 22), 'tests/api.spec.ts'),
     ('wstaw_po', r(9, 52), 'tests/fixtures.ts', '  },\n  klient: async', 2, 'przed'),
@@ -111,21 +105,22 @@ MANIFEST = [
     ('test', r(9, 243), 'tests/przechwytywanie.spec.ts'),
     ('test', r(9, 259), 'tests/przechwytywanie.spec.ts'),
     # --- rozdział 10 ---
-    ('plik', r(10, 46), 'tests/r10-niestabilne.spec.ts', FIX + "\n" + U + "rozdział 10.2 celowo przepuszcza pierwszy test przez bramkę\n/* eslint-disable playwright/no-wait-for-timeout, playwright/prefer-web-first-assertions */\n\n"),
+    ('plik', r(10, 46), 'tests/r10-niestabilne.spec.ts', FIX + "\n/* eslint-disable playwright/no-wait-for-timeout, playwright/prefer-web-first-assertions */\n\n"),
     ('sprawdz_w', r(10, 79), 'playwright.config.ts'),
     ('opakuj', r(10, 115), 'tests/fragmenty.spec.ts', "test('R10 §10.3 czekanie na odpowiedź serwera', async ({ klient, page }) => {\n  await page.goto('/produkty/kubek');\n", "});"),
     ('sprawdz_w', r(10, 129), 'playwright.config.ts'),
     ('pomin', r(10, 163), 'szkielet testu w kwarantannie z treścią „// ...”'),
     # --- rozdział 11 ---
     ('plik', r(11, 20), 'tests/wizualne.spec.ts', FIX + "\n"),
-    ('plik', r(11, 81), 'tests/dostepnosc.spec.ts'),
-    ('test', r(11, 112), 'tests/dostepnosc.spec.ts'),
-    ('test', r(11, 136), 'tests/dostepnosc.spec.ts'),
-    ('plik', r(11, 175), 'tests/wydajnosc.spec.ts', FIX + "\n"),
-    ('plik', r(11, 198), 'wydajnosc/katalog.ts'),
-    ('plik', r(11, 239), 'tests/bezpieczenstwo.spec.ts', FIX + U + "import fabryki danych z rozdziału 8.3\nimport { nowyKlient } from './dane.ts';\n\n"),
-    ('test', r(11, 258), 'tests/bezpieczenstwo.spec.ts'),
-    ('test', r(11, 275), 'tests/bezpieczenstwo.spec.ts'),
+    ('sprawdz_w', r(11, 67), 'playwright.config.ts'),
+    ('plik', r(11, 100), 'tests/dostepnosc.spec.ts'),
+    ('test', r(11, 131), 'tests/dostepnosc.spec.ts'),
+    ('test', r(11, 155), 'tests/dostepnosc.spec.ts'),
+    ('plik', r(11, 194), 'tests/wydajnosc.spec.ts', FIX + "\n"),
+    ('plik', r(11, 217), 'wydajnosc/katalog.ts'),
+    ('plik', r(11, 258), 'tests/bezpieczenstwo.spec.ts', FIX + U + "import fabryki danych z rozdziału 8.3\nimport { nowyKlient } from './dane.ts';\n\n"),
+    ('test', r(11, 277), 'tests/bezpieczenstwo.spec.ts'),
+    ('test', r(11, 294), 'tests/bezpieczenstwo.spec.ts'),
     # --- rozdział 12 ---
     ('plik', r(12, 23), 'scripts/czekaj-na-sklep.ts'),
     ('sprawdz_w', r(12, 47), 'playwright.config.ts'),
@@ -150,19 +145,19 @@ MANIFEST = [
     ('wstaw_po', r(13, 314), '.github/workflows/regresja.yml', 'run: npx playwright merge-reports --reporter html ./all-blob-reports\n', 0, 'po'),
     # --- rozdział 14–17 ---
     ('pomin', r(14, 100), 'przykład snapshotu dostępności z logu agenta'),
-    ('plik', r(14, 160), '.claude/settings.json'),
+    ('plik', r(14, 164), '.claude/settings.json'),
     ('plik', r(15, 52), 'tests/seed.spec.ts'),
     ('pomin', r(15, 79), 'fragment planu z plannera'),
-    ('plik', r(15, 119), 'tests/r15-generator.spec.ts'),
+    ('plik', r(15, 122), 'tests/r15-generator.spec.ts'),
     ('plik', r(16, 86), 'tests/mutacje.ts'),
     ('zamien_blokiem', r(16, 122), 'tests/fixtures.ts', 'export const test = base.extend<Fixtures>({\n', 0, 'naglowek_page'),
     ('zamien', None, 'tests/fixtures.ts', "import { nowyKlient, type DaneKlienta } from './dane.ts';\n", "import { nowyKlient, type DaneKlienta } from './dane.ts';\nimport { mutacje } from './mutacje.ts';\n"),
     ('plik', r(17, 22), 'CLAUDE.md'),
     ('plik', r(17, 32), 'AGENTS.md'),
-    ('plik', r(17, 98), '.claude/skills/przeglad-testu/SKILL.md'),
-    ('plik', r(17, 146), '.githooks/pre-push'),
-    ('wstaw_po', r(17, 133), 'eslint.config.mjs', "      '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],\n", 6, 'po'),
-    ('scal_json', r(17, 163), '.claude/settings.json'),
+    ('plik', r(17, 99), '.claude/skills/przeglad-testu/SKILL.md'),
+    ('plik', r(17, 147), '.githooks/pre-push'),
+    ('wstaw_po', r(17, 134), 'eslint.config.mjs', "      '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],\n", 6, 'po'),
+    ('scal_json', r(17, 164), '.claude/settings.json'),
     # --- rozdział 18–19 ---
     ('plik', r(18, 33), 'ewaluacje/model.ts'),
     ('plik', r(18, 71), 'ewaluacje/asystent.ts'),
@@ -238,6 +233,9 @@ def zloz(do_rozdzialu=100, cel=None, szablon=False):
         elif rodzaj == 'zamien':
             if op[3] not in pliki.get(op[2], ''): blad(f'zamien: brak fragmentu w {op[2]}: {op[3][:60]!r}')
             pliki[op[2]] = pliki[op[2]].replace(op[3], op[4], 1)
+        elif rodzaj == 'zamien_wszystkie':
+            if op[3] not in pliki.get(op[2], ''): blad(f'zamien_wszystkie: brak fragmentu w {op[2]}: {op[3][:60]!r}')
+            pliki[op[2]] = pliki[op[2]].replace(op[3], op[4])
         elif rodzaj == 'zamien_blokiem':
             tekst, stare = pliki.get(op[2], ''), op[3]
             wciecie = op[4] if len(op) > 4 and isinstance(op[4], int) else 0
@@ -300,7 +298,7 @@ narzedzia/akceptacja.sh <obraz>    # testuje gotowy obraz
 
 Wyniki i rozbieżności z tekstem: `docs/rozbieznosci.md`, część E.
 """
-    pliki['.gitignore'] = 'node_modules/\n/test-results/\n/playwright-report/\n/blob-report/\n/playwright/.cache/\n/playwright/.auth/\n/wyniki/\n.env\n'
+    pliki['.gitignore'] = 'node_modules/\n/test-results/\n/playwright-report/\n/blob-report/\n/playwright/.cache/\n/playwright/.auth/\n/wyniki/\n.playwright-mcp/\n.playwright-cli/\n.env\n'
     pliki['.env.example'] = 'BASE_URL=http://localhost:3000\nADMIN_EMAIL=\nADMIN_HASLO=\n'
 
     if szablon:
@@ -346,6 +344,7 @@ def konfiguracja(n):
         t = re.sub(r"  reporter: process\.env\.CI\n.*?\],\n(?=  globalTimeout)", "  reporter: 'html',\n", t, flags=re.S)
         t = re.sub(r"  globalTimeout: .*\n", '', t)
     if n < 10: t = t.replace("    timezoneId: 'Europe/Warsaw',\n    locale: 'pl-PL',\n", '')
+    if n < 11: t = t.replace("      grepInvert: /@wizualne/,\n", '')
     return t
 
 
@@ -363,7 +362,10 @@ def przygotuj_szablon(pliki, n):
     if n >= 6 and cfg: wynik['playwright.config.ts'] = cfg
     if n < 8: wynik.pop('.env', None); wynik.pop('.env.example', None)
     wynik.pop('.env', None)  # dane logowania nigdy nie trafiają do repozytorium (rozdział 8.5)
-    wynik['docs/.gitkeep'] = ''
+    # Komentarze UZUPEŁNIENIE są dla autora; w repozytorium czytelnika zostaje sam kod.
+    wynik = {k: re.sub(r'^[ \t]*// UZUPEŁNIENIE[^\n]*\n', '', v, flags=re.M) if k.endswith(('.ts', '.mjs')) else v for k, v in wynik.items()}
+    for nazwa in ('wymagania.md', 'api.md'):
+        wynik[f'docs/sklep/{nazwa}'] = (KORZEN / 'docs' / nazwa).read_text()
     wynik['README.md'] = README_SZABLONU.replace('{N}', str(n))
     return wynik
 
@@ -380,8 +382,8 @@ npm ci                  # narzędzia w wersjach z książki
 docker compose up -d    # sklep ćwiczeniowy na http://localhost:3000
 ```
 
-Sklep: obraz `ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0`, opisany w
-[wymaganiach](https://github.com/tomasztomys/sklep-cwiczeniowy/blob/main/docs/wymagania.md) i w [opisie API](https://github.com/tomasztomys/sklep-cwiczeniowy/blob/main/docs/api.md).
+Sklep: obraz `ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0`. Jego wymagania są w [docs/sklep/wymagania.md](docs/sklep/wymagania.md),
+a opis API w [docs/sklep/api.md](docs/sklep/api.md).
 
 ## Stan projektu po każdym rozdziale
 
@@ -390,7 +392,7 @@ Gdy coś nie działa, porównaj swój kod z tagiem, np.
 [rozdzial-08](https://github.com/tomasztomys/testy-sklepu/tree/rozdzial-08). Każdy tag przechodzi
 `npm run check` (od rozdziału 4) i testy na sklepie (od rozdziału 6).
 
-Błąd w książce albo w kodzie? Sprawdź [ERRATA.md](ERRATA.md), potem zgłoś go w Issues.
+Błąd w książce albo w kodzie? Zgłoś go w Issues.
 """
 
 

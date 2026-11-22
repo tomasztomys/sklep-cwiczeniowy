@@ -14,7 +14,7 @@ docker run -d --name sklep-szablon "$OBRAZ" >/dev/null
 for n in $(seq "$1" "$2"); do
   NN=$(printf "%02d" "$n"); T=$(mktemp -d)
   python3 narzedzia/zloz-akceptacje.py --do-rozdzialu "$n" --szablon --cel "$T" >/dev/null || { echo "✗ rozdział $n: składanie"; exit 1; }
-  cp narzedzia/szablon/package-lock.json narzedzia/szablon/ERRATA.md "$T/"
+  cp narzedzia/szablon/package-lock.json "$T/"
   # Sprawdzenie w obrazie Playwrighta, w sieci kontenera sklepu (sklep pod http://localhost:3000).
   # Plik .env tylko na czas sprawdzenia; dane z rozdziału 8.5, nie trafiają do repozytorium.
   printf 'BASE_URL=http://localhost:3000\nADMIN_EMAIL=admin@sklep.test\nADMIN_HASLO=Admin123!\n' > "$T/.env"

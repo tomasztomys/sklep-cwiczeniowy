@@ -1,7 +1,8 @@
 # Testy sklepu ćwiczeniowego
 
 Testy automatyczne sklepu ćwiczeniowego: Playwright 1.65, TypeScript 6, Node.js 26.
-Wymagania sklepu: docs/strategia.md, docs/api.md, docs/elementy.md.
+Wymagania sklepu: docs/sklep/wymagania.md, docs/sklep/api.md.
+Moje notatki: docs/strategia.md, docs/api.md, docs/elementy.md.
 
 ## Polecenia
 - `npm run check`: tsc i ESLint, musi przejść bez błędów i ostrzeżeń

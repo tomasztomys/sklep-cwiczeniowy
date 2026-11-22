@@ -35,7 +35,7 @@ test('R7 §7.2 listy elementów', async ({ page }) => {
   await expect(produkty.getByRole('heading')).toHaveText(['Kubek', 'Notes', 'Bluza']);
 });
 
-// rozdzial-07:239
+// rozdzial-07:240
 test('R7 §7.5 asercje miękkie', async ({ page }) => {
   await page.goto('/produkty/kubek');
   await expect.soft(page.getByRole('heading', { level: 1 })).toHaveText('Kubek');
@@ -43,7 +43,7 @@ test('R7 §7.5 asercje miękkie', async ({ page }) => {
   await expect.soft(page.getByAltText('Biały kubek z logo sklepu')).toBeVisible();
 });
 
-// rozdzial-07:251
+// rozdzial-07:252
 test('R7 §7.5 własny komunikat', async ({ klient, page }) => {
   await page.goto('/produkty/kubek');
   await page.getByRole('button', { name: 'Dodaj do koszyka' }).click();
@@ -53,7 +53,7 @@ test('R7 §7.5 własny komunikat', async ({ klient, page }) => {
   ).toHaveText('Dodano do koszyka');
 });
 
-// rozdzial-07:264
+// rozdzial-07:265
 test('R7 §7.5 expect.poll', async ({ klient, page }) => {
   await page.goto('/produkty/kubek');
   await page.getByRole('button', { name: 'Dodaj do koszyka' }).click();

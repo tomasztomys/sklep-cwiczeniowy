@@ -28,7 +28,7 @@ porownaj() { node narzedzia/porownaj-wyniki.mjs "narzedzia/.wyniki-$1.json" "$2"
 
 BLAD=0
 AXE=("dostepnosc.spec.ts › strona / nie ma naruszeń WCAG wykrywalnych automatycznie" "dostepnosc.spec.ts › strona /logowanie nie ma naruszeń WCAG wykrywalnych automatycznie" "dostepnosc.spec.ts › strona /produkty/kubek nie ma naruszeń WCAG wykrywalnych automatycznie")
-KOSZYK=("dodatek-a-struktura.spec.ts › klient dodaje dwa kubki do koszyka" "dodatek-f-trzy-narzedzia.spec.ts › klient dodaje dwa kubki do koszyka" "dostepnosc.spec.ts › przycisk dodawania do koszyka działa z klawiatury" "fragmenty.spec.ts › R7 §7.5 własny komunikat" "koszyk.spec.ts › klient dodaje dwa kubki do koszyka" "r10-niestabilne.spec.ts › niestabilny: sztywne czekanie" "r10-niestabilne.spec.ts › stabilny: asercja web-first" "wizualne.spec.ts › koszyk z kubkiem wygląda jak wzorzec")
+KOSZYK=("dodatek-a-struktura.spec.ts › klient dodaje dwa kubki do koszyka" "dodatek-f-trzy-narzedzia.spec.ts › klient dodaje dwa kubki do koszyka" "dostepnosc.spec.ts › przycisk dodawania do koszyka działa z klawiatury" "fragmenty.spec.ts › R7 §7.5 własny komunikat" "koszyk.spec.ts › klient dodaje dwa kubki do koszyka" "koszyk.spec.ts › zalogowany klient dodaje kubek do koszyka" "r10-niestabilne.spec.ts › niestabilny: sztywne czekanie" "r10-niestabilne.spec.ts › stabilny: asercja web-first" "wizualne.spec.ts › koszyk z kubkiem wygląda jak wzorzec")
 
 sklep ""
 testy "" baza ""

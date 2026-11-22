@@ -17,6 +17,9 @@ Tekst książki jest w `ksiazka/` (tylko lokalnie, katalog nie trafia do gita).
 - Decyzje autora są w `docs/decyzje.md`. Nie zmieniaj ich bez pytania.
 - `docs/wymagania.md` i `docs/api.md` to dokumentacja dla czytelnika: bez cytatów z książki i bez listy
   celowych usterek. Każdą zmianę zachowania wprowadzaj jednocześnie w specyfikacji i w tych plikach.
+  Szablon `testy-sklepu` dostaje ich kopię w `docs/sklep/` (`narzedzia/szablon.sh`), więc po zmianie przebuduj szablon.
+- Czytelnik nie dostaje spisu rozbieżności ani errat: przed wydaniem rozbieżność usuwa się w treści książki,
+  w szablonie albo w sklepie.
 
 ## Celowe usterki
 

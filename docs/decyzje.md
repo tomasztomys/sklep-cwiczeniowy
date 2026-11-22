@@ -28,6 +28,14 @@ Agent nie zmienia tego pliku bez polecenia (zob. `CLAUDE.md`).
 | B-18 Mutacje pod `localhost` | R16: uruchamiaj mutacje lokalnie | Errata |
 | B-19 Zmienna `karta` w dodatku A | Dopisana definicja w przykładzie | Errata |
 | B-20 Szablon z przypiętymi wersjami | Szablon zawiera `package.json` i `package-lock.json` z wersjami ze Wstępu; R3: `npm ci` po sklonowaniu; R4: `npm ci` zamiast `npm init` i instalacji; R6: przywrócenie `@playwright/test@1.65.1` po instalatorze; R7, R8, R9, R11: pakiety „są już w szablonie” | Errata, wprowadzona 2026-11-22 |
+| B-21 Nocna regresja na wszystkich projektach | R11: `grepInvert: /@wizualne/` w projektach `firefox` i `webkit` (też dodatek A.9); R8: test z 7.3 przepisany na fixtures, stare wersje testów usuwane; testy z R6–R7 w `tests/koszyk.spec.ts` i `tests/katalog.spec.ts` | Zmiana treści, wprowadzona 2026-11-22 |
+| B-22 Nagranie Codegen w R6 | Prawdziwe nagranie Playwright 1.65.1 (`getByRole('textbox', …)`, `getByTestId`), poprawione punkty pod nagraniem | Zmiana treści, wprowadzona 2026-11-22 |
+| B-23 Snapshot Playwright MCP w R14 | Prawdziwy snapshot z `@playwright/mcp` 0.0.86, `ref=e18` | Zmiana treści, wprowadzona 2026-11-22 |
+| B-24 Plan i healer w R15 | Format planu z prawdziwego przebiegu plannera; trzeci wynik healera (zatrzymanie i pytanie) | Zmiana treści, wprowadzona 2026-11-22 |
+| B-25 Wymagania sklepu w szablonie | `docs/sklep/wymagania.md` i `api.md` w szablonie; R3, R15, R17, dodatki C i D wskazują te pliki | Zmiana treści i szablonu, wprowadzona 2026-11-22 |
+| B-26 Szablon bez spisu rozbieżności | Bez `ERRATA.md` i bez komentarzy `UZUPEŁNIENIE` w kodzie czytelnika; przed wydaniem poprawiana jest treść książki | Decyzja autora 2026-11-22 |
+| B-27 Katalogi robocze agentów | `.playwright-mcp/` i `.playwright-cli/` w `.gitignore` szablonu; R3 i R14 | Zmiana treści i szablonu, wprowadzona 2026-11-22 |
+| B-28 Koszyk po poprzednim uruchomieniu | R6 §6.4 i R7 §7.3: `page.request.delete('/api/cart')` w kodzie testów z wyjaśnieniem; ramka w 7.3 tylko o `--workers=1` | Zmiana treści, wprowadzona 2026-11-22 |
 
 ## Errata w dokumencie książki
 
