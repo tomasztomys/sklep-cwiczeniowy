@@ -200,9 +200,34 @@ Status: B-13–B-19 rozstrzygnięte erratami 2026-11-22 (`docs/decyzje.md`).
 - **Objaw:** przykład używa zmiennej `karta`, której ściąga nie definiuje.
 - **Propozycja (errata):** dopisać linię `const karta = page.getByRole('listitem').filter({ hasText: 'Kubek' });`.
 
+### B-20. Szablon bez `package.json` a przypięte wersje
+
+- **Miejsca:**
+  - Wstęp: «to je instalujesz z szablonu poleceniem `npm ci`»;
+  - R3 §3.2: szablon zawiera tylko `compose.yaml`, `docs/`, `.gitignore` i README;
+  - R4–R11: kolejne `npm install --save-dev …` bez wersji;
+  - R6: `npm init playwright@latest`.
+- **Objaw:** czytelnik instaluje najnowsze wersje zamiast tych z książki. Najnowszy Playwright nie pasuje do obrazu `mcr.microsoft.com/playwright:v1.65.1-noble` w CI z rozdziału 12 i do wzorców wizualnych.
+- **Rozstrzygnięcie (errata, `docs/decyzje.md`):** szablon ma `package.json` i `package-lock.json` z wersjami ze Wstępu. Tekst kieruje do `npm ci` i mówi, które pakiety są już w szablonie. Instalator Playwrighta zostaje, z poleceniem przywracającym wersję 1.65.1.
+
 ### Uwaga bez propozycji zmiany
 
 Test wizualny strony kubka z tolerancją 1% (R11 §11.1) nie wykrywa zmiany ceny z 49,99 zł na 59,99 zł, bo zmienia się mniej niż 1% pikseli. Jest to zgodne z książką, bo tabela zabójstw nie przypisuje tej mutacji testom wizualnym.
+
+## F. Szablon repozytorium czytelnika (etap 8)
+
+`narzedzia/szablon.sh` buduje `testy-sklepu` z tego samego manifestu co `akceptacja/` (tryb `--szablon` w `zloz-akceptacje.py`). Gałąź `main` to stan z początku rozdziału 3, czyli to, co czytelnik dostaje przez „Use this template”. Gałąź `rozdzialy` ma stany po rozdziałach 4–20 i tagi `rozdzial-03` … `rozdzial-20`. Rozdział 20 nie zawiera kodu, więc ma ten sam stan co 19.
+
+Stany zawierają kod z książki, bez rozwiązań ćwiczeń. Konfiguracja Playwrighta i skrypty npm odpowiadają danemu rozdziałowi: konfiguracja z rozdziału 6 do rozdziału 7, potem wersja z dodatku A.9 bez zmian z rozdziałów 10, 12 i 13. Każdy stan sprawdzono w obrazie `mcr.microsoft.com/playwright:v1.65.1-noble` na obrazie sklepu:
+
+| Rozdziały | Sprawdzenie | Wynik |
+| --- | --- | --- |
+| 3 | `npm ci` | ✓ |
+| 4–5 | `npm ci`, `npm run check` | ✓ |
+| 6–10 | jak wyżej i wszystkie testy (Chromium) | ✓, bez nieudanych |
+| 11–20 | jak wyżej | ✓, nieudane tylko trzy skany axe wykrywające celowe usterki |
+
+`ERRATA.md` w szablonie jest pusta do wydania. Formularz zgłoszenia z rozdziału 13 (`blad.yml`) jest w stanach od rozdziału 13, a nie w `main`. Czytelnik tworzy go sam w ćwiczeniu, a gotowy plik w szablonie odebrałby mu to ćwiczenie.
 
 ## C. Ustalenia spoza książki do zatwierdzenia
 

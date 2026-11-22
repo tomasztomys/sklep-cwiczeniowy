@@ -1,7 +1,8 @@
 import { test, expect } from './fixtures.ts';
-// UZUPEŁNIENIE (etap 6): importy dla testów z rozdziałów 9.3 i 13.1
+// UZUPEŁNIENIE (etap 6): importy dla testu z rozdziału 9.3
 import * as z from 'zod';
 import { nowyKlient } from './dane.ts';
+// UZUPEŁNIENIE (etap 6): import dla testu z rozdziału 13.1
 import { Koszyk } from './schematy.ts';
 
 test('lista produktów zawiera trzy produkty', { tag: '@api' }, async ({ request }) => {

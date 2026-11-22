@@ -25,34 +25,32 @@ U = '// UZUPEŁNIENIE (etap 6): '
 # (operacja, blok | None, argumenty...)
 MANIFEST = [
     # --- rozdział 3–5: projekt, ćwiczenia z TypeScriptu i HTTP ---
-    ('plik', r(3, 155), 'compose.yaml'),
+    ('plik', r(3, 157), 'compose.yaml'),
     ('zamien', None, 'compose.yaml', 'image: ghcr.io/AUTOR/sklep-cwiczeniowy:1.0', 'image: ${OBRAZ_SKLEPU:-ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0}'),
-    ('plik', r(4, 41), 'tsconfig.json'),
-    ('plik', r(4, 62), 'cwiczenia/rozdzial-04/pierwszy.ts'),
-    ('plik', r(4, 82), 'cwiczenia/rozdzial-04/zmienne.ts'),
-    ('plik', r(4, 101), 'cwiczenia/rozdzial-04/obiekty.ts'),
-    ('plik', r(4, 124), 'cwiczenia/rozdzial-04/rabat.ts'),
-    ('plik', r(4, 145), 'cwiczenia/rozdzial-04/typy.ts'),
-    ('plik', r(4, 180), 'cwiczenia/rozdzial-04/opcjonalne.ts'),
-    ('plik', r(4, 203), 'cwiczenia/rozdzial-04/suma-koszyka.ts'),
-    ('plik', r(4, 233), 'cwiczenia/rozdzial-04/klient-api.ts'),
-    ('plik', r(4, 253), 'cwiczenia/rozdzial-04/adres.ts'),
-    ('wstaw_przed_ostatnia', r(4, 268), 'cwiczenia/rozdzial-04/klient-api.ts'),
-    ('plik', r(4, 282), 'cwiczenia/rozdzial-04/stan-sklepu.ts'),
-    ('zamien_blokiem', r(4, 304), 'cwiczenia/rozdzial-04/stan-sklepu.ts', "console.log(`Sklep: ${await api.stan()}`); // Sklep: ok"),
-    ('pomin', r(4, 293), 'celowo błędny przykład: brak await'),
-    ('pomin', r(4, 319), 'ćwiczenie z celowymi błędami (bledny-test.ts)'),
-    ('plik', r(4, 358), 'eslint.config.mjs'),
-    ('plik', r(4, 384), '.prettierrc.json'),
-    ('plik', r(4, 390), '.vscode/settings.json'),
-    ('pomin', r(4, 401), 'skrypty package.json; wersja końcowa w dodatku A.3'),
+    ('plik', r(4, 39), 'tsconfig.json'),
+    ('plik', r(4, 60), 'cwiczenia/rozdzial-04/pierwszy.ts'),
+    ('plik', r(4, 80), 'cwiczenia/rozdzial-04/zmienne.ts'),
+    ('plik', r(4, 99), 'cwiczenia/rozdzial-04/obiekty.ts'),
+    ('plik', r(4, 122), 'cwiczenia/rozdzial-04/rabat.ts'),
+    ('plik', r(4, 143), 'cwiczenia/rozdzial-04/typy.ts'),
+    ('plik', r(4, 178), 'cwiczenia/rozdzial-04/opcjonalne.ts'),
+    ('plik', r(4, 201), 'cwiczenia/rozdzial-04/suma-koszyka.ts'),
+    ('plik', r(4, 231), 'cwiczenia/rozdzial-04/klient-api.ts'),
+    ('plik', r(4, 251), 'cwiczenia/rozdzial-04/adres.ts'),
+    ('wstaw_przed_ostatnia', r(4, 266), 'cwiczenia/rozdzial-04/klient-api.ts'),
+    ('plik', r(4, 280), 'cwiczenia/rozdzial-04/stan-sklepu.ts'),
+    ('zamien_blokiem', r(4, 302), 'cwiczenia/rozdzial-04/stan-sklepu.ts', "console.log(`Sklep: ${await api.stan()}`); // Sklep: ok"),
+    ('pomin', r(4, 291), 'celowo błędny przykład: brak await'),
+    ('pomin', r(4, 317), 'ćwiczenie z celowymi błędami (bledny-test.ts)'),
+    ('plik', r(4, 356), 'eslint.config.mjs'),
+    ('plik', r(4, 382), '.prettierrc.json'),
+    ('plik', r(4, 388), '.vscode/settings.json'),
+    ('pomin', r(4, 399), 'skrypty package.json; wersja końcowa w dodatku A.3'),
     ('plik', r(5, 169), 'cwiczenia/rozdzial-05/sesja.ts'),
     # --- rozdział 6 ---
     ('pomin', r(6, 47), 'konfiguracja wygenerowana; wersja końcowa w dodatku A.9'),
     ('plik', r(6, 89), 'tests/katalog.spec.ts'),
     ('plik', r(6, 115), 'tests/logowanie.spec.ts'),
-    ('zamien', None, 'tests/katalog.spec.ts', PW, "// UZUPEŁNIENIE (etap 6): import po ćwiczeniu 2 z rozdziału 8\n" + FIX),
-    ('zamien', None, 'tests/logowanie.spec.ts', PW, "// UZUPEŁNIENIE (etap 6): import po ćwiczeniu 2 z rozdziału 8\n" + FIX),
     ('pomin', r(6, 191), 'szkic z Codegen bez asercji, celowo słaby'),
     ('plik', r(6, 218), 'tests/r06-dwa-kubki.spec.ts'),
     ('zamien', None, 'tests/r06-dwa-kubki.spec.ts',
@@ -83,6 +81,8 @@ MANIFEST = [
     ('plik', r(8, 20), 'tests/strony/strona-produktu.ts'),
     ('plik', r(8, 50), 'tests/strony/strona-koszyka.ts'),
     ('plik', r(8, 102), 'tests/fixtures.ts'),
+    ('zamien', None, 'tests/katalog.spec.ts', PW, "// UZUPEŁNIENIE (etap 6): import po ćwiczeniu 2 z rozdziału 8\n" + FIX),
+    ('zamien', None, 'tests/logowanie.spec.ts', PW, "// UZUPEŁNIENIE (etap 6): import po ćwiczeniu 2 z rozdziału 8\n" + FIX),
     ('plik', r(8, 142), 'tests/koszyk.spec.ts'),
     ('zamien_blokiem', r(8, 159), 'eslint.config.mjs', "    rules: {\n      'playwright/no-wait-for-timeout': 'error',\n      'playwright/no-raw-locators': 'warn',\n    },", 6),
     ('plik', r(8, 185), 'tests/dane.ts'),
@@ -105,7 +105,7 @@ MANIFEST = [
     ('plik', r(9, 142), 'tests/schematy.ts'),
     ('pomin', r(9, 170), 'fragment pokazujący użycie parse'),
     ('test', r(9, 183), 'tests/api.spec.ts'),
-    ('zamien', None, 'tests/api.spec.ts', FIX, FIX + U + "importy dla testów z rozdziałów 9.3 i 13.1\nimport * as z from 'zod';\nimport { nowyKlient } from './dane.ts';\nimport { Koszyk } from './schematy.ts';\n"),
+    ('zamien', None, 'tests/api.spec.ts', FIX, FIX + U + "importy dla testu z rozdziału 9.3\nimport * as z from 'zod';\nimport { nowyKlient } from './dane.ts';\n"),
     ('plik', r(9, 205), 'tests/hybryda.spec.ts', FIX + "\n"),
     ('test', r(9, 231), 'tests/przechwytywanie.spec.ts', FIX + U + "import schematu z rozdziału 9.3\nimport { ListaProduktow } from './schematy.ts';\n\n"),
     ('test', r(9, 243), 'tests/przechwytywanie.spec.ts'),
@@ -142,6 +142,7 @@ MANIFEST = [
     ('pomin', r(13, 81), 'opcjonalny wariant reportera'),
     ('sprawdz_w', r(13, 91), 'playwright.config.ts'),
     ('test', r(13, 101), 'tests/api.spec.ts'),
+    ('zamien', None, 'tests/api.spec.ts', "import { nowyKlient } from './dane.ts';\n", "import { nowyKlient } from './dane.ts';\n" + U + "import dla testu z rozdziału 13.1\nimport { Koszyk } from './schematy.ts';\n"),
     ('plik', r(13, 141), '.github/ISSUE_TEMPLATE/blad.yml'),
     ('pomin', r(13, 234), 'fragment adnotacji z adresem zgłoszenia'),
     ('plik', r(13, 272), 'scripts/statystyki.ts'),
@@ -195,7 +196,8 @@ def blad(msg):
     sys.exit(f'BŁĄD: {msg}')
 
 
-def zloz(do_rozdzialu=100):
+def zloz(do_rozdzialu=100, cel=None, szablon=False):
+    CEL = pathlib.Path(cel) if cel else KORZEN / 'akceptacja'
     def numer(klucz):
         n = klucz.split(':')[0]
         return int(n[-2:]) if n.startswith('rozdzial') else 100
@@ -215,9 +217,12 @@ def zloz(do_rozdzialu=100):
     pliki, uwagi = {}, []
     kod = lambda k: BLOKI[k]['kod'] + '\n'
 
+    ostatni = 0
     for op in MANIFEST:
         rodzaj, k = op[0], op[1]
-        if k and numer(k) > do_rozdzialu: continue
+        # Operacja bez bloku (np. zamien) należy do rozdziału poprzedzającego ją bloku.
+        if k: ostatni = numer(k)
+        if ostatni > do_rozdzialu: continue
         if rodzaj == 'pomin': continue
         if rodzaj == 'plik':
             pliki[op[2]] = (op[3] if len(op) > 3 else '') + kod(k)
@@ -298,22 +303,98 @@ Wyniki i rozbieżności z tekstem: `docs/rozbieznosci.md`, część E.
     pliki['.gitignore'] = 'node_modules/\n/test-results/\n/playwright-report/\n/blob-report/\n/playwright/.cache/\n/playwright/.auth/\n/wyniki/\n.env\n'
     pliki['.env.example'] = 'BASE_URL=http://localhost:3000\nADMIN_EMAIL=\nADMIN_HASLO=\n'
 
+    if szablon:
+        pliki = przygotuj_szablon(pliki, do_rozdzialu)
+
     for sciezka, tresc in pliki.items():
         p = CEL / sciezka; p.parent.mkdir(parents=True, exist_ok=True); p.write_text(tresc)
 
     # Zasoby wygenerowane według książki: nagranie HAR (rozdział 9.5) i wzorce wizualne z obrazu Dockera (rozdział 11.1).
+    zasoby = KORZEN / 'narzedzia' / 'akceptacja-zasoby'
+    if do_rozdzialu >= 9:
+        shutil.copytree(zasoby / 'hary', CEL / 'hary', dirs_exist_ok=True)
     if do_rozdzialu >= 11:
-        shutil.copytree(KORZEN / 'narzedzia' / 'akceptacja-zasoby', CEL, dirs_exist_ok=True)
+        shutil.copytree(zasoby / 'tests', CEL / 'tests', dirs_exist_ok=True)
 
     # Zgodność fragmentów konfiguracji z plikiem końcowym (linie bloku obecne w pliku).
     norm = lambda s: re.sub(r'\s+', ' ', s).strip().rstrip(',')
-    for k, sciezka in uwagi:
+    for k, sciezka in ([] if szablon else uwagi):
         cel = norm(pliki.get(sciezka, ''))
         brak = [l for l in BLOKI[k]['kod'].splitlines() if norm(l) and norm(l) not in cel and not norm(l).startswith('//') and norm(l) not in ('{', '}', '},', '],', ']', '});')]
         if brak: print(f'UWAGA {k}: w {sciezka} brak linii: {[norm(l) for l in brak][:3]}')
-    print(f'Złożono {len(pliki)} plików w {CEL.relative_to(KORZEN)}')
+    print(f'Złożono {len(pliki)} plików w {CEL}')
+
+
+# --- Szablon repozytorium czytelnika (etap 8): stan projektu po rozdziale N -------------------------
+
+SKRYPTY = [  # (od rozdziału, nazwa, polecenie) – z rozdziałów 4, 6, 10, 12 i 18
+    (4, 'typecheck', 'tsc --noEmit'), (4, 'lint', 'eslint .'), (4, 'format', 'prettier --write .'),
+    (4, 'check', 'npm run typecheck && npm run lint'), (6, 'test', 'playwright test'),
+    (10, 'test:bramka', 'playwright test --grep-invert @kwarantanna'),
+    (12, 'test:pr', 'playwright test --project=chromium --grep "@smoke|@api|@a11y|@bezpieczenstwo|@wizualne" --grep-invert @kwarantanna --fail-on-flaky-tests'),
+    (18, 'eval', 'node ewaluacje/uruchom.ts'),
+]
+
+
+def konfiguracja(n):
+    """playwright.config.ts po rozdziale n: z rozdziału 6, od rozdziału 8 wersja z dodatku A.9 bez późniejszych zmian."""
+    if n < 8:
+        return BLOKI[r(6, 47)]['kod'] + '\n' if r(6, 47) in BLOKI else None
+    t = next(b['kod'] for k, b in BLOKI.items() if k.startswith('dodatek-a:') and b['plik'] == 'playwright.config.ts') + '\n'
+    if n < 13: t = t.replace("    screenshot: 'only-on-failure',\n", '')
+    if n < 12:
+        t = re.sub(r"  reporter: process\.env\.CI\n.*?\],\n(?=  globalTimeout)", "  reporter: 'html',\n", t, flags=re.S)
+        t = re.sub(r"  globalTimeout: .*\n", '', t)
+    if n < 10: t = t.replace("    timezoneId: 'Europe/Warsaw',\n    locale: 'pl-PL',\n", '')
+    return t
+
+
+def przygotuj_szablon(pliki, n):
+    wynik = {k: v for k, v in pliki.items() if not k.startswith('tests/fragmenty') and not k.startswith('tests/dodatek-')}
+    wynik.pop('README.md', None)
+    wynik['compose.yaml'] = wynik['compose.yaml'].replace('${OBRAZ_SKLEPU:-ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0}', 'ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0') \
+        .replace('    # DO UZUPEŁNIENIA: docelowy adres obrazu sklepu\n', '')
+    wynik['package.json'] = json.dumps({
+        'name': 'testy-sklepu', 'version': '1.0.0', 'private': True, 'type': 'module',
+        **({'scripts': {nazwa: pol for od, nazwa, pol in SKRYPTY if od <= n}} if n >= 4 else {}),
+        'devDependencies': json.loads((KORZEN / 'narzedzia' / 'akceptacja-zaleznosci.json').read_text()),
+    }, indent=2, ensure_ascii=False) + '\n'
+    cfg = konfiguracja(n)
+    if n >= 6 and cfg: wynik['playwright.config.ts'] = cfg
+    if n < 8: wynik.pop('.env', None); wynik.pop('.env.example', None)
+    wynik.pop('.env', None)  # dane logowania nigdy nie trafiają do repozytorium (rozdział 8.5)
+    wynik['docs/.gitkeep'] = ''
+    wynik['README.md'] = README_SZABLONU.replace('{N}', str(n))
+    return wynik
+
+
+README_SZABLONU = """# Testy sklepu
+
+Repozytorium startowe do książki „Automatyzacja testów z agentem AI u boku. Start z Playwright i TypeScript”.
+Utwórz z niego własne repozytorium przyciskiem **Use this template** i pracuj według rozdziału 3.
+
+## Start
+
+```bash
+npm ci                  # narzędzia w wersjach z książki
+docker compose up -d    # sklep ćwiczeniowy na http://localhost:3000
+```
+
+Sklep: obraz `ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0`, wymagania i API w
+[specyfikacji](https://github.com/tomasztomys/sklep-cwiczeniowy/blob/main/docs/specyfikacja.md).
+
+## Stan projektu po każdym rozdziale
+
+Tagi `rozdzial-03` … `rozdzial-20` zawierają kod z książki po danym rozdziale, bez rozwiązań ćwiczeń.
+Gdy coś nie działa, porównaj swój kod z tagiem, np.
+[rozdzial-08](https://github.com/tomasztomys/testy-sklepu/tree/rozdzial-08). Każdy tag przechodzi
+`npm run check` (od rozdziału 4) i testy na sklepie (od rozdziału 6).
+
+Błąd w książce albo w kodzie? Sprawdź [ERRATA.md](ERRATA.md), potem zgłoś go w Issues.
+"""
 
 
 if __name__ == '__main__':
     n = int(sys.argv[sys.argv.index('--do-rozdzialu') + 1]) if '--do-rozdzialu' in sys.argv else 100
-    zloz(n)
+    cel = sys.argv[sys.argv.index('--cel') + 1] if '--cel' in sys.argv else None
+    zloz(n, cel, '--szablon' in sys.argv)

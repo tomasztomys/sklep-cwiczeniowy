@@ -27,6 +27,7 @@ Agent nie zmienia tego pliku bez polecenia (zob. `CLAUDE.md`).
 | B-17 HAR a adres sklepu | R9 §9.5: nagranie działa tylko pod adresem, pod którym powstało | Errata |
 | B-18 Mutacje pod `localhost` | R16: uruchamiaj mutacje lokalnie | Errata |
 | B-19 Zmienna `karta` w dodatku A | Dopisana definicja w przykładzie | Errata |
+| B-20 Szablon z przypiętymi wersjami | Szablon zawiera `package.json` i `package-lock.json` z wersjami ze Wstępu; R3: `npm ci` po sklonowaniu; R4: `npm ci` zamiast `npm init` i instalacji; R6: przywrócenie `@playwright/test@1.65.1` po instalatorze; R7, R8, R9, R11: pakiety „są już w szablonie” | Errata, wprowadzona 2026-11-22 |
 
 ## Errata w dokumencie książki
 
