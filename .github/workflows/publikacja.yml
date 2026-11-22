@@ -1,0 +1,75 @@
+# Publikacja obrazu sklepu w GHCR po tagu v* (etap 7 planu).
+# Najpierw testy akceptacyjne z książki na zbudowanym obrazie, dopiero potem obraz amd64 + arm64 trafia do rejestru.
+name: Publikacja obrazu
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publikacja-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  OBRAZ: ghcr.io/${{ github.repository_owner }}/sklep-cwiczeniowy
+
+jobs:
+  akceptacja:
+    name: Testy akceptacyjne na obrazie z tagu
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+      - run: docker build -t sklep-cwiczeniowy:wydanie .
+      - name: Kod z książki, mutacje i tryby błędów
+        run: narzedzia/akceptacja.sh sklep-cwiczeniowy:wydanie
+
+  publikacja:
+    name: Obraz linux/amd64 i linux/arm64 w GHCR
+    needs: [akceptacja]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: metadane
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.OBRAZ }}
+          # v1.0.0 → 1.0.0, 1.0 i latest; v1.0 → 1.0 i latest
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=match,pattern=v(\d+\.\d+)$,group=1
+            type=raw,value=latest
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.metadane.outputs.tags }}
+          labels: ${{ steps.metadane.outputs.labels }}
+      - name: Sprawdzenie obrazu z rejestru na obu architekturach
+        run: |
+          wersja="${GITHUB_REF_NAME#v}"
+          for platforma in linux/amd64 linux/arm64; do
+            docker run -d --rm --platform "$platforma" --name sklep-test -p 3000:3000 "$OBRAZ:$wersja"
+            for _ in $(seq 1 30); do curl -sf http://localhost:3000/api/health && break; sleep 2; done
+            curl -sf http://localhost:3000/api/products | grep -q Kubek
+            docker stop sklep-test
+          done
