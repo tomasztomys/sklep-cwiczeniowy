@@ -1,6 +1,7 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import playwright from 'eslint-plugin-playwright';
+import globals from 'globals';
 
 export default tseslint.config(
   { ignores: ['wzorzec/', 'ksiazka/', 'akceptacja/', 'node_modules/', 'test-results/', 'playwright-report/', 'publiczne/'] },
@@ -12,6 +13,7 @@ export default tseslint.config(
   {
     files: ['**/*.mjs'],
     ...tseslint.configs.disableTypeChecked,
+    languageOptions: { ...tseslint.configs.disableTypeChecked.languageOptions, globals: globals.node },
   },
   {
     files: ['testy/**/*.ts'],
