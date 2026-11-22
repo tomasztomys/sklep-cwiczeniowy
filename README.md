@@ -6,7 +6,7 @@ tryby błędów i kilka celowych usterek dostępności do znalezienia.
 
 **Czytasz książkę?** Nie potrzebujesz tego kodu. Swoje testy piszesz w repozytorium utworzonym
 z szablonu [testy-sklepu](https://github.com/tomasztomys/testy-sklepu), a sklep uruchamiasz z gotowego
-obrazu według rozdziału 3. Wymagania i opis API są w [docs/specyfikacja.md](docs/specyfikacja.md).
+obrazu według rozdziału 3. Wymagania są w [docs/wymagania.md](docs/wymagania.md), a opis API w [docs/api.md](docs/api.md).
 
 ## Uruchomienie z obrazu
 
@@ -62,7 +62,7 @@ Po pierwszej publikacji ustaw pakiet w GHCR jako publiczny (Package settings →
 - `src/` – sklep (Hono, Node.js 26, TypeScript bez kroku budowania)
 - `publiczne/` – style, czcionka Inter (licencja OFL), obrazy produktów
 - `testy/` – testy sklepu
-- `docs/` – specyfikacja, celowe usterki, rozbieżności i decyzje
+- `docs/` – dla czytelnika: `wymagania.md`, `api.md`; dla autora i agenta: specyfikacja z cytatami, celowe usterki, rozbieżności i decyzje
 - `akceptacja/` – kod z książki złożony w projekt czytelnika (generowany, nie edytuj)
 - `narzedzia/` – skrypty: wyciąganie kodu z książki, testy akceptacyjne, szablon `testy-sklepu` (`szablon.sh`), obrazy produktów
 - `wzorzec/` – makieta, na której pierwotnie sprawdzono kod z książki

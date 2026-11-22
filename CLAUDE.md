@@ -15,6 +15,8 @@ Tekst książki jest w `ksiazka/` (tylko lokalnie, katalog nie trafia do gita).
 - Gdy książka, specyfikacja i sklep się rozjeżdżają, nie rozstrzygaj sam. Zapisz pozycję
   w `docs/rozbieznosci.md`: rozdział, fragment, objaw, propozycja (zmiana sklepu albo errata).
 - Decyzje autora są w `docs/decyzje.md`. Nie zmieniaj ich bez pytania.
+- `docs/wymagania.md` i `docs/api.md` to dokumentacja dla czytelnika: bez cytatów z książki i bez listy
+  celowych usterek. Każdą zmianę zachowania wprowadzaj jednocześnie w specyfikacji i w tych plikach.
 
 ## Celowe usterki
 
