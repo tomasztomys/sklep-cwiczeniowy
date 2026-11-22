@@ -21,7 +21,9 @@ Agent nie zmienia tego pliku bez polecenia (zob. `CLAUDE.md`).
 | B-12 Adresy do uzupełnienia | `ghcr.io/tomasztomys/sklep-cwiczeniowy:1.0`, `https://github.com/tomasztomys/testy-sklepu` | Errata w etapie 9 |
 | C Ustalenia spoza książki | Wszystkie zatwierdzone | Specyfikacja bez zmian |
 
-## Errata do wprowadzenia w dokumencie książki
+## Errata w dokumencie książki
+
+Punkty 1–5 wprowadzone 2026-11-22 w dokumencie i w `ksiazka/`. Punkt 6 czeka na etap 9.
 
 1. R2 ćw. 1: «np. rejestrację, wyszukiwanie, koszyk, rabaty, historię zamówień, uprawnienia i zmianę hasła» → «np. logowanie, rejestrację, katalog, koszyk, rabaty i uprawnienia do zamówień».
 2. R11 §11.2 i ćw. 3: «cały zakup» → «całą ścieżkę od katalogu do koszyka z kodem rabatowym».
