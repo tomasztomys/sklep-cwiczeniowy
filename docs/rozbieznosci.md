@@ -25,6 +25,14 @@ Makieta pozostaje wzorcem zachowania tylko tam, gdzie zgadza się ze specyfikacj
 | M-10 | U-3, U-4 | W stopce są dwa pola wyszukiwania (jedno ukryte w etykiecie „Szukaj”). Newsletter otwiera okienko `alert()` |
 | M-11 | API-8 | Zamówienie nr 1 zwraca `{id, wlasciciel, suma}` bez pozycji, z adresem e-mail właściciela |
 | M-12 | K-1, K-3 | Brak Dockerfile, obrazu, `HEALTHCHECK` i wersji wieloarchitekturowej (zgodnie z założeniem makiety) |
+| M-13 | API-9 | Po `DELETE /api/users/me` sesja usuniętego konta nadal działa: `GET /api/cart` zwraca 200 |
+| M-14 | API-6 | Kod rabatowy jest szukany także w prototypie obiektu: `toString` daje „Kod rabatowy jest nieaktywny” zamiast „Nieznany kod rabatowy” |
+| M-15 | API-2 | E-mail podany jako liczba albo bez `@` jest przyjmowany przy rejestracji |
+| M-16 | API-0.6, API-8 | Nieznany adres API bez sesji daje 401 zamiast 404; zamówienie `abc` daje „Nie znaleziono” zamiast „Nie ma takiego zamówienia” |
+
+### Testy API sklepu na makiecie (etap 3)
+
+Te same 62 testy z `testy/api/` uruchomione na makiecie: 40 przechodzi, 22 nie. Każdy nieudany test odpowiada pozycji M-2, M-4, M-5, M-8, M-11 i M-13–M-16 albo endpointom dodanym decyzją B-1 (`PATCH` i `DELETE /api/cart/items/{produktId}`) i S-4 (`POST /api/logout`). Na sklepie przechodzą wszystkie 62 testy oraz wszystkie 12 testów `@api` z kodu książki (`wzorzec/tests`).
 
 ---
 

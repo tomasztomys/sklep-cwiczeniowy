@@ -1,4 +1,6 @@
 import { Hono } from 'hono';
+import { utworzApi } from './api.ts';
+import type { Sklep } from './stan.ts';
 
 // Nagłówki bezpieczeństwa na każdej odpowiedzi (specyfikacja B-1).
 const NAGLOWKI_BEZPIECZENSTWA: Record<string, string> = {
@@ -7,7 +9,7 @@ const NAGLOWKI_BEZPIECZENSTWA: Record<string, string> = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
 };
 
-export function utworzAplikacje(): Hono {
+export function utworzAplikacje(sklep: Sklep): Hono {
   const app = new Hono();
 
   app.use(async (c, next) => {
@@ -15,8 +17,7 @@ export function utworzAplikacje(): Hono {
     for (const [nazwa, wartosc] of Object.entries(NAGLOWKI_BEZPIECZENSTWA)) c.header(nazwa, wartosc);
   });
 
-  app.get('/api/health', (c) => c.json({ status: 'ok' }));
-
+  app.route('/api', utworzApi(sklep));
   app.all('/api/*', (c) => c.json({ blad: 'Nie znaleziono' }, 404));
 
   app.onError((blad, c) => {

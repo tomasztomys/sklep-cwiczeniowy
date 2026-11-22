@@ -289,7 +289,7 @@ Wspólne zasady:
 | --- | --- | --- |
 | `GET /api/health` | `200` `{"status":"ok"}` | – |
 | `GET /api/products` | `200` lista `{id, nazwa, cena}` | – |
-| `POST /api/users` | `201` `{email, rola}` | `400` „Brak e-maila lub hasła”, `409` „Użytkownik już istnieje” |
+| `POST /api/users` | `201` `{email, rola}` | `400` „Brak e-maila lub hasła”, `400` „Nieprawidłowy e-mail”, `409` „Użytkownik już istnieje” |
 | `POST /api/login` | `200` `{email, rola}` + ciasteczko `sesja` | `401` „Nieprawidłowy e-mail lub hasło” |
 | `POST /api/logout` [propozycja] | `204` + usunięcie ciasteczka | `401` |
 | `GET /api/cart` | `200` koszyk | `401` |
@@ -308,7 +308,7 @@ Wspólne zasady:
 - R9 §9.3 «cena: z.number().positive(),»
 - R18 «na podstawie danych z GET /api/products»
 
-**API-2. `POST /api/users`** z `{"email","haslo"}` tworzy konto klienta i zwraca `201` z dokładnie dwoma polami: `email` i `rola` (`"klient"`). Zajęty e-mail daje `409`. Brak e-maila albo hasła daje `400`. Treść komunikatów: [makieta]. Walidacja formatu e-maila i siły hasła: [propozycja] niepusty tekst z `@` i niepuste hasło.
+**API-2. `POST /api/users`** z `{"email","haslo"}` tworzy konto klienta i zwraca `201` z dokładnie dwoma polami: `email` i `rola` (`"klient"`). Zajęty e-mail daje `409`. Brak e-maila albo hasła daje `400`. Treść komunikatów: [makieta]. E-mail i hasło muszą być niepustymi tekstami, inaczej `400` „Brak e-maila lub hasła”. E-mail bez `@` albo ze spacją daje `400` „Nieprawidłowy e-mail” [propozycja]. Siła hasła nie jest sprawdzana.
 - R9 §9.3 «const NowyUzytkownik = z.strictObject({»
 - R9 §9.2 «Rejestracja na zajęty adres e-mail | 409»
 

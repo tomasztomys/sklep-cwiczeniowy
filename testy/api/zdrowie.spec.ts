@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures.ts';
 
 test.describe('kontrola stanu (K-3)', () => {
   test('GET /api/health zwraca status ok bez sesji', async ({ request }) => {

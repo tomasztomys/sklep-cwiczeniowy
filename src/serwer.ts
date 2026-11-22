@@ -1,11 +1,12 @@
 import { serve } from '@hono/node-server';
 import { utworzAplikacje } from './aplikacja.ts';
 import { wczytajKonfiguracje } from './konfiguracja.ts';
+import { Sklep } from './stan.ts';
 
 const konfiguracja = wczytajKonfiguracje();
 for (const ostrzezenie of konfiguracja.ostrzezenia) console.warn(ostrzezenie);
 
-const serwer = serve({ fetch: utworzAplikacje().fetch, port: konfiguracja.port, hostname: '0.0.0.0' }, (info) => {
+const serwer = serve({ fetch: utworzAplikacje(new Sklep(konfiguracja.daneStartowe)).fetch, port: konfiguracja.port, hostname: '0.0.0.0' }, (info) => {
   const bledy = [...konfiguracja.bledy].join(', ') || 'brak';
   console.log(`Sklep ćwiczeniowy działa na porcie ${String(info.port)} (dane startowe: ${konfiguracja.daneStartowe ? 'tak' : 'nie'}, tryby błędów: ${bledy})`);
 });
